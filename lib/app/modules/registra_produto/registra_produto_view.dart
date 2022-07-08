@@ -1,12 +1,12 @@
 import 'package:bompreco/app/global/widgets/bt_normal.dart';
 import 'package:bompreco/app/global/widgets/input_normal.dart';
 import 'package:bompreco/app/global/widgets/voltar_top.dart';
-import 'package:bompreco/app/modules/criar_loja/criar_loja_controller.dart';
+import 'package:bompreco/app/modules/registra_produto/registra_produto_controller.dart';
 import 'package:bompreco/app/theme/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class RegistraProdutoView extends GetView<CriarLojaController> {
+class RegistraProdutoView extends GetView<RegistraProdutoController> {
   const RegistraProdutoView({Key? key}) : super(key: key);
 
   @override
@@ -35,6 +35,9 @@ class RegistraProdutoView extends GetView<CriarLojaController> {
                       enabled: !controller.loading.value,
                       onChanged: (value) {},
                     ),
+                  ),
+                  const SizedBox(
+                    height: 25,
                   ),
                   Column(
                     children: [
