@@ -4,6 +4,7 @@ import 'package:bompreco/app/data/model/parceiro.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 
 class ParceiroProvider {
   static String root = Conexao().getConexao();
@@ -29,14 +30,53 @@ class ParceiroProvider {
     return null;
   }
 
-  registerParceiro(Parceiro parceiro, String token) async {
+  getAllUser(int id, String token) async {
+    //http.Response response;
+    try {
+      var headers = {
+        'Content-Type': 'application/json',
+        'authorization': 'Bearer $token'
+      };
+
+      final body = {
+        'id': id,
+      };
+
+      var response = await http.post(Uri.parse(root + 'userParceiro'),
+          body: json.encode(body));
+
+      if (200 == response.statusCode) {
+        return json.decode(response.body);
+      } else {
+        Conexao().dialogSMS('Parceiros', "Erro Parceiros");
+      }
+    } catch (e) {
+      print('Erro Parceiros $e');
+    }
+    return null;
+  }
+
+  registerParceiro(Parceiro parceiro, XFile img1, String token) async {
+    print("Parser->" +
+        parceiro.nome.toString() +
+        " IMG:" +
+        img1.path.toString() +
+        " Token:" +
+        token.toString());
+    http.MultipartFile multipartFile1;
     try {
       http.MultipartRequest request =
           new http.MultipartRequest("POST", Uri.parse(root + 'parceiroStore'));
 
+      if (img1.path.isNotEmpty) {
+        multipartFile1 = await http.MultipartFile.fromPath('file', img1.path);
+        request.files.add(multipartFile1);
+      }
+
       request.headers['Content-Type'] = 'application/json';
       request.headers['authorization'] = 'Bearer $token';
 
+      request.fields['dono_id_user'] = parceiro.donoIdUser.toString();
       request.fields['nome'] = parceiro.nome.toString();
       request.fields['img'] = parceiro.img.toString();
       request.fields['horario'] = parceiro.horario.toString();
@@ -50,7 +90,7 @@ class ParceiroProvider {
       if (200 == response.statusCode) {
         return true;
       } else {
-        Conexao().dialogSMS('Registrar', "Erro ao enviar o Mensagem!");
+        Conexao().dialogSMS('Registrar', "Erro ao enviar os dados da Loja!");
         return false;
       }
     } catch (e) {
@@ -59,10 +99,16 @@ class ParceiroProvider {
     return null;
   }
 
-  updateParceiro(Parceiro parceiro, String token) async {
+  updateParceiro(Parceiro parceiro, XFile img1, String token) async {
+    http.MultipartFile multipartFile1;
     try {
       http.MultipartRequest request =
           new http.MultipartRequest("POST", Uri.parse(root + 'parceiroUpdate'));
+
+      if (img1.path.isNotEmpty) {
+        multipartFile1 = await http.MultipartFile.fromPath('file1', img1.path);
+        request.files.add(multipartFile1);
+      }
 
       request.headers['Content-Type'] = 'application/json';
       request.headers['authorization'] = 'Bearer $token';

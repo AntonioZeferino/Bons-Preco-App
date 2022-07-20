@@ -16,7 +16,7 @@ class CriarContaView extends GetView<CriarContaController> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Form(
-          key: controller.formkey,
+          key: controller.formKey,
           child: SizedBox(
             height: Get.height,
             width: Get.width,
@@ -78,6 +78,11 @@ class CriarContaView extends GetView<CriarContaController> {
                       icons: Icons.key,
                       controller: controller.password1Ctrl,
                       enabled: !controller.loading.value,
+                      showPassword: !controller.showPassword.value,
+                      changeShowPassword: () {
+                        controller.showPassword.value =
+                            !controller.showPassword.value;
+                      },
                       onChanged: (value) {},
                     ),
                   ),
@@ -87,6 +92,11 @@ class CriarContaView extends GetView<CriarContaController> {
                       icons: Icons.key,
                       controller: controller.password2Ctrl,
                       enabled: !controller.loading.value,
+                      showPassword: !controller.showPassword.value,
+                      changeShowPassword: () {
+                        controller.showPassword.value =
+                            !controller.showPassword.value;
+                      },
                       onChanged: (value) {},
                     ),
                   ),
@@ -99,7 +109,9 @@ class CriarContaView extends GetView<CriarContaController> {
                       child: ButtonNormal(
                         text: 'Criar',
                         height: 50,
-                        press: () {},
+                        press: () {
+                          controller.verificarUser(context);
+                        },
                       ),
                     ),
                   ),

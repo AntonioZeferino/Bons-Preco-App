@@ -1,3 +1,7 @@
+import 'package:bompreco/app/data/conexao.dart';
+import 'package:bompreco/app/data/model/parceiro.dart';
+import 'package:bompreco/app/data/model/user.dart';
+import 'package:bompreco/app/data/repository/parceiro.repository.dart';
 import 'package:bompreco/app/routes/app_routes.dart';
 import 'package:bompreco/app/theme/layout.dart';
 import 'package:flutter/material.dart';
@@ -7,15 +11,29 @@ import 'package:get_storage/get_storage.dart';
 class NavigationDrawerWidget extends StatelessWidget {
   final padding = const EdgeInsets.symmetric(horizontal: 5);
   final box = GetStorage('BonsPreco');
+  User user = User();
+
+  Parceiro parceiro = Parceiro();
+  ParceiroRepository parceiroRepository = ParceiroRepository();
   //static String root = Conexao().getImgUser();
-  RxBool loading = true.obs;
+  RxString token = ''.obs;
 
   @override
   Widget build(BuildContext context) {
     String name = '';
     String contacto = '';
     String email = '';
-    RxString urlImage = 'assets/user.png'.obs;
+    if (box.read('user') != null) {
+      user = User.fromJson(box.read('user'));
+      name = user.nome.toString();
+      contacto = user.contacto.toString();
+      email = user.email.toString();
+      token.value = box.read('accessToken');
+    } else {
+      name = "Bons Preços";
+      contacto = '900 000 000';
+      email = 'abc@bonspreco.com';
+    }
 
     return Drawer(
       child: Material(
@@ -28,14 +46,21 @@ class NavigationDrawerWidget extends StatelessWidget {
               ),
           children: [
             buildHeader(
-              name: "Bons Preços",
+              name: name,
+              email: email,
+              contacto: contacto,
             ),
             const SizedBox(height: 13),
             buildMenuItem(
               text: 'Minhas Reservas',
               icon: Icons.shopping_cart,
               onClicked: () {
-                Get.toNamed(Routes.MINHAS_RESERVAS);
+                if (user.id != null) {
+                  Get.toNamed(Routes.MINHAS_RESERVAS);
+                } else {
+                  Conexao().dialogSMS(
+                      'Aviso!', "Porfavor faça um Login ou Criar um conta!");
+                }
               },
             ),
             buildMenuItem(
@@ -56,14 +81,31 @@ class NavigationDrawerWidget extends StatelessWidget {
               text: 'Criar Loja',
               icon: Icons.shopify,
               onClicked: () {
-                Get.toNamed(Routes.CRIAR_LOJA);
+                if (user.id != null) {
+                  Get.toNamed(Routes.CRIAR_LOJA);
+                } else {
+                  Conexao().dialogSMS(
+                      'Aviso!', "Porfavor faça um Login ou Criar um conta!");
+                }
               },
             ),
             buildMenuItem(
               text: 'Minha Loja',
               icon: Icons.shopify,
               onClicked: () {
-                Get.toNamed(Routes.MINHA_LOJA);
+                if (user.id != null) {
+                  parceiro = parceiroRepository.parceiroSelectUser(
+                      user.id!, token.value);
+                  if (parceiro.donoIdUser == user.id!) {
+                    box.write('Parceiro', parceiro);
+                    Get.toNamed(Routes.MINHA_LOJA);
+                  } else {
+                    Conexao().dialogSMS('Aviso!', "Não tens uma Loja criada!");
+                  }
+                } else {
+                  Conexao().dialogSMS(
+                      'Aviso!', "Porfavor faça um Login ou Criar um conta!");
+                }
               },
             ),
             buildMenuItem(
@@ -71,6 +113,13 @@ class NavigationDrawerWidget extends StatelessWidget {
               icon: Icons.add_business,
               onClicked: () {
                 Get.toNamed(Routes.VER_LOJA);
+              },
+            ),
+            buildMenuItem(
+              text: 'Sair',
+              icon: Icons.close,
+              onClicked: () {
+                Conexao().logout();
               },
             ),
           ],
@@ -104,9 +153,10 @@ class NavigationDrawerWidget extends StatelessWidget {
     );
   }
 
-  buildHeader({
-    required String name,
-  }) =>
+  buildHeader(
+          {required String name,
+          required String email,
+          required String contacto}) =>
       Container(
         padding: padding.add(
           const EdgeInsets.only(
@@ -124,8 +174,24 @@ class NavigationDrawerWidget extends StatelessWidget {
                   name,
                   style: TextStyle(
                     color: Layout.primaryWhite(),
-                    fontSize: 18,
+                    fontSize: 15,
                     fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  contacto,
+                  style: TextStyle(
+                    color: Layout.primaryWhite(),
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                Text(
+                  email,
+                  style: TextStyle(
+                    color: Layout.primaryWhite(),
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ],

@@ -11,13 +11,11 @@ class AuthUserProvider {
 
   register(User user) async {
     try {
-      var map = Map<String, dynamic>();
-      map['nome'] = user.nome.toString();
+      var map = <String, dynamic>{};
+      map['name'] = user.nome.toString();
       map['email'] = user.email.toString();
       map['password'] = user.password.toString();
       map['contacto'] = user.contacto.toString();
-      map['parceiro'] = user.parceiro.toString();
-      map['gestor'] = user.gestor.toString();
 
       var response = await http.post(Uri.parse(root + 'register'), body: map);
 
@@ -38,7 +36,7 @@ class AuthUserProvider {
 
   login(String user, String passe) async {
     try {
-      var map = Map<String, dynamic>();
+      var map = <String, dynamic>{};
       map['email'] = user;
       map['password'] = passe;
 
@@ -130,7 +128,6 @@ class AuthUserProvider {
       if (user.password.toString().isNotEmpty && user.password != null) {
         request.fields['password'] = user.password.toString();
       }
-      request.fields['parceiro'] = user.parceiro.toString();
       request.fields['gestor'] = user.gestor.toString();
 
       var response = await request.send();

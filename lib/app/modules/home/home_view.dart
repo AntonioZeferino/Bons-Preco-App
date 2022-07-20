@@ -124,12 +124,18 @@ class HomeView extends GetView<HomeController> {
                               );
                             })
                         : Center(
-                            child: Text(
-                              'Nenhuma produto encontrado.',
-                              style: TextStyle(
-                                color: Layout.dark(),
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500,
+                            child: Container(
+                              height: 50,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: SizedBox.expand(
+                                child: TextButton(
+                                  child: CircularProgressIndicator(
+                                    color: Layout.primary(),
+                                  ),
+                                  onPressed: () {},
+                                ),
                               ),
                             ),
                           ),
@@ -170,12 +176,18 @@ class HomeView extends GetView<HomeController> {
                               );
                             })
                         : Center(
-                            child: Text(
-                              'Nenhuma produto encontrado.',
-                              style: TextStyle(
-                                color: Layout.dark(),
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500,
+                            child: Container(
+                              height: 50,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: SizedBox.expand(
+                                child: TextButton(
+                                  child: CircularProgressIndicator(
+                                    color: Layout.primary(),
+                                  ),
+                                  onPressed: () {},
+                                ),
                               ),
                             ),
                           ),

@@ -56,7 +56,7 @@ class LoginView extends GetView<LoginController> {
                       hintText: 'Senha',
                       icons: Icons.key,
                       controller: controller.passeCtrl,
-                      showPassword: controller.showPassword.value,
+                      showPassword: !controller.showPassword.value,
                       changeShowPassword: () {
                         controller.showPassword.value =
                             !controller.showPassword.value;

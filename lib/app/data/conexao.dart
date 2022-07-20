@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:bompreco/app/data/repository/user.repository.dart';
+import 'package:bompreco/app/routes/app_routes.dart';
 import 'package:bompreco/app/theme/layout.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,18 +11,27 @@ import 'package:get_storage/get_storage.dart';
 class Conexao {
   String? url;
   String token = '';
+  final repositoryUser = AuthUserRepository();
   ConnectivityResult result = ConnectivityResult.none;
   RxBool net = true.obs;
   final box = GetStorage('BonsPreco');
 
   get() {
-    //return url = 'http://100.125.42.170:8000/';
-    return url = 'http://192.168.0.103:8000/';
+    //return url = 'http://192.168.43.87:8000/';
+    return url = 'http://192.168.0.100:8000/';
     //return url = 'http://bginovation.com/kesongo/public/';
   }
 
   getConexao() {
     return url = get() + 'api/';
+  }
+
+  getImgProduto() {
+    return url = get() + "storage/imgProduto/";
+  }
+
+  getImgParceiro() {
+    return url = get() + "storage/imgParceiro/";
   }
 
   verificaConexao() async {
@@ -108,29 +121,16 @@ class Conexao {
     );
   }
 
-  escreverPost(
-      String img,
-      int preco,
-      String cidade,
-      String titulo,
-      String descricao,
-      int categoria,
-      int id,
-      int userId,
-      String userName,
-      String userContacto,
-      String userImg) {
-    box.write('img', img);
-    box.write('titulo', titulo);
-    box.write('descricao', descricao);
-    box.write('preco', preco);
-    box.write('categoria', categoria);
-    box.write('cidade', cidade);
-    box.write('estadoP', 1);
-    box.write('pedido_id', id);
-    box.write('user_id', userId);
-    box.write('userName', userName);
-    box.write('userContacto', userContacto);
-    box.write('userImg', userImg);
+  logout() async {
+    token = box.read('accessToken');
+    if (token.isNotEmpty) {
+      bool s = await repositoryUser.logout(token);
+      print('Sair:' + s.toString());
+      box.remove('user');
+      box.remove('accessToken');
+      Get.offAllNamed(Routes.HOME);
+    } else {
+      exit(0);
+    }
   }
 }

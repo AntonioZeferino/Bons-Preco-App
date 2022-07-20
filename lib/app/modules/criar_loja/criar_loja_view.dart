@@ -1,9 +1,11 @@
+import 'dart:io';
+
 import 'package:bompreco/app/global/widgets/bt_normal.dart';
 import 'package:bompreco/app/global/widgets/input_normal.dart';
-import 'package:bompreco/app/global/widgets/input_password.dart';
 import 'package:bompreco/app/global/widgets/voltar_top.dart';
 import 'package:bompreco/app/modules/criar_loja/criar_loja_controller.dart';
 import 'package:bompreco/app/theme/layout.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -115,23 +117,75 @@ class CriarLojaView extends GetView<CriarLojaController> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Container(
-                        margin: const EdgeInsets.all(8),
-                        height: Get.height / 4,
-                        width: Get.width / 1.3,
-                        decoration: BoxDecoration(
-                          color: Layout.primary(),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Center(
-                          child: Text(
-                            'Clique a qui',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                              color: Layout.primaryWhite(),
-                            ),
-                          ),
+                      //foto 1
+                      GestureDetector(
+                        onTap: () {
+                          controller.bottomCamera(true);
+                        },
+                        child: Obx(
+                          () => controller.verImg1.value == 1
+                              ? CachedNetworkImage(
+                                  imageUrl: controller.root +
+                                      controller.parceiro.img.toString(),
+                                  fit: BoxFit.cover,
+                                  imageBuilder:
+                                      (BuildContext context, imageProvider) =>
+                                          Container(
+                                    height: Get.height / 4,
+                                    width: Get.width / 1.3,
+                                    decoration: BoxDecoration(
+                                      color: Layout.primary(),
+                                      borderRadius: BorderRadius.circular(10),
+                                      image: DecorationImage(
+                                        image: imageProvider,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                  placeholder: (BuildContext context, url) =>
+                                      Container(
+                                    height: Get.height / 4,
+                                    width: Get.width / 1.3,
+                                    decoration: BoxDecoration(
+                                      color: Layout.primary(),
+                                      borderRadius: BorderRadius.circular(10),
+                                      image: const DecorationImage(
+                                        image: AssetImage('assets/logo.png'),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    child: Center(
+                                      child: CircularProgressIndicator(
+                                        color: Layout.primaryWhite(),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              : controller.isPicked1.value
+                                  ? Container(
+                                      height: Get.height / 4,
+                                      width: Get.width / 1.3,
+                                      decoration: BoxDecoration(
+                                        color: Layout.primary(),
+                                        borderRadius: BorderRadius.circular(10),
+                                        image: DecorationImage(
+                                          image: FileImage(
+                                            File(controller.image1.value.path),
+                                          ),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    )
+                                  : Container(
+                                      height: Get.height / 4,
+                                      width: Get.width / 1.3,
+                                      decoration: const BoxDecoration(
+                                        image: DecorationImage(
+                                          image: AssetImage('assets/logo.png'),
+                                          fit: BoxFit.fill,
+                                        ),
+                                      ),
+                                    ),
                         ),
                       ),
                     ],
@@ -145,7 +199,9 @@ class CriarLojaView extends GetView<CriarLojaController> {
                       child: ButtonNormal(
                         text: 'Criar',
                         height: 50,
-                        press: () {},
+                        press: () {
+                          controller.setParceiro();
+                        },
                       ),
                     ),
                   ),

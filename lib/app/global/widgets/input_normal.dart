@@ -58,7 +58,7 @@ class InputNormal extends StatelessWidget {
         },
         enabled: enabled,
         maxLines: maxLines,
-        //controller: controller.searchCtrl,
+        controller: controller,
         decoration: InputDecoration(
           border: InputBorder.none,
           prefixIcon: Icon(

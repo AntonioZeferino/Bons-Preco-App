@@ -5,7 +5,7 @@ import 'package:get_storage/get_storage.dart';
 
 class AuthUserRepository {
   final AuthUserProvider apiUser = AuthUserProvider();
-  final box = GetStorage('republic-biolo');
+  final box = GetStorage('BonsPreco');
 
   register(User user) async {
     Map? json = await apiUser.register(user);

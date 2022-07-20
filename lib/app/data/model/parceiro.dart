@@ -1,5 +1,6 @@
 class Parceiro {
   int? id;
+  int? donoIdUser;
   String? nome;
   String? img;
   String? horario;
@@ -7,23 +8,21 @@ class Parceiro {
   String? endereco;
   String? contacto;
   String? email;
-  Null? createdAt;
-  Null? updatedAt;
 
   Parceiro(
       {this.id,
+      this.donoIdUser,
       this.nome,
       this.img,
       this.horario,
       this.entregas,
       this.endereco,
       this.contacto,
-      this.email,
-      this.createdAt,
-      this.updatedAt});
+      this.email});
 
   Parceiro.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    donoIdUser = json['dono_id_user'];
     nome = json['nome'];
     img = json['img'];
     horario = json['horario'];
@@ -31,13 +30,12 @@ class Parceiro {
     endereco = json['endereco'];
     contacto = json['contacto'];
     email = json['email'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
     data['id'] = id;
+    data['dono_id_user'] = donoIdUser;
     data['nome'] = nome;
     data['img'] = img;
     data['horario'] = horario;
@@ -45,8 +43,6 @@ class Parceiro {
     data['endereco'] = endereco;
     data['contacto'] = contacto;
     data['email'] = email;
-    data['created_at'] = createdAt;
-    data['updated_at'] = updatedAt;
     return data;
   }
 }

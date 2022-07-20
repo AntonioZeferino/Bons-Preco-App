@@ -68,7 +68,7 @@ class InputPassword extends StatelessWidget {
           ),
           suffixIcon: IconButton(
             icon: Icon(
-              showPassword ? Icons.visibility_off : Icons.visibility,
+              showPassword ? Icons.visibility : Icons.visibility_off,
               color: Layout.primary(),
               size: 30,
             ),

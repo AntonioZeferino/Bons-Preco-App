@@ -25,7 +25,7 @@ class LoginController extends GetxController {
       if (formKey.currentState!.validate()) {
         loading.value = true;
         Token token = await repository
-            .login(userCtrl.text, passeCtrl.text)
+            .login(userCtrl.text.toString(), passeCtrl.text.toString())
             .catchError((onError) {
           loading.value = false;
         });
@@ -35,7 +35,8 @@ class LoginController extends GetxController {
 
           box.write('accessToken', token.accessToken);
           box.write('tokenType', token.tokenType);
-          print(token.accessToken.toString());
+
+          //print(token.accessToken.toString());
           if (user != null) {
             box.write('user', user.toJson());
           }

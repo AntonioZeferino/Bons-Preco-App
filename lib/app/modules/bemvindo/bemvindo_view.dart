@@ -15,12 +15,20 @@ class BemvindoView extends GetView<BemvindoController> {
         child: Container(
           height: Get.height,
           width: Get.width,
-          decoration: BoxDecoration(
-            color: Layout.primary(),
-            // image: const DecorationImage(
-            //   image: AssetImage('assets/kesongobv.png'),
-            //   fit: BoxFit.fill,
-            // ),
+          color: Layout.primaryWhite(),
+          child: Container(
+            margin: EdgeInsets.only(
+              left: Get.width / 80,
+              right: Get.width / 80,
+            ),
+            height: Get.height / 50,
+            width: Get.width / 52,
+            decoration: const BoxDecoration(
+              //color: Layout.primaryDark(),
+              image: DecorationImage(
+                image: AssetImage('assets/logo.png'),
+              ),
+            ),
           ),
         ),
       ),

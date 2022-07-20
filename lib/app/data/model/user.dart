@@ -4,7 +4,6 @@ class User {
   String? email;
   String? password;
   String? contacto;
-  String? parceiro;
   String? gestor;
 
   User({
@@ -13,7 +12,6 @@ class User {
     this.email,
     this.password,
     this.contacto,
-    this.parceiro,
     this.gestor,
   });
 
@@ -23,7 +21,6 @@ class User {
     email = json['email'];
     password = json['password'];
     contacto = json['contacto'];
-    parceiro = json['parceiro'];
     gestor = json['gestor'];
   }
 
@@ -34,7 +31,6 @@ class User {
     data['email'] = email;
     data['password'] = password;
     data['contacto'] = contacto;
-    data['parceiro'] = parceiro;
     data['gestor'] = gestor;
     return data;
   }
