@@ -11,15 +11,13 @@ class ListProdutoLoja extends StatelessWidget {
     required this.preco,
     required this.data,
     required this.stok,
-    required this.st,
   }) : super(key: key);
 
   final String img;
   final String titulo;
-  final int preco;
+  final double preco;
   final String data;
-  final String stok;
-  final int st;
+  final int stok;
 
   @override
   Widget build(BuildContext context) {
@@ -149,9 +147,9 @@ class ListProdutoLoja extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      stok,
+                      stok == 0 ? "Tem" : "Terminou",
                       style: TextStyle(
-                        color: st == 0 ? Layout.primary() : Layout.danger(),
+                        color: stok == 1 ? Layout.primary() : Layout.danger(),
                         fontSize: 14,
                         fontWeight: FontWeight.w700,
                       ),

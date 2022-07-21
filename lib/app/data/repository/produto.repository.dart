@@ -26,7 +26,7 @@ class ProdutoRepository {
     return list;
   }
 
-  produtoDaLojaSelect(Produto produto, int id) async {
+  produtoDaLojaSelect(int id) async {
     List<Produto> list = <Produto>[];
     var response = await api.getAllProdutoDaLoja(id);
     response.forEach((e) {

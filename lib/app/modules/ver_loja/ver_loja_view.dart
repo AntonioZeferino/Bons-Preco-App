@@ -46,48 +46,41 @@ class VerLojaView extends GetView<VerLojaController> {
                   ],
                 ),
                 //Lista Top
-                Container(
-                  height: Get.height / 1.1,
-                  width: Get.width,
-                  child: ListView(
-                    scrollDirection: Axis.vertical,
-                    children: const [
-                      ListLoja(
-                        img: "margherita-pizza-993274_960_720.jpg",
-                        titulo: "Bem Barato",
-                        endereco: "Goa",
-                      ),
-                      ListLoja(
-                        img: "pop_corn.jpg",
-                        titulo: "A.Z - Comercial",
-                        endereco: "Kasseque de frente ao kero",
-                      ),
-                      ListLoja(
-                        img: "margherita-pizza-993274_960_720.jpg",
-                        titulo: "Bem Barato",
-                        endereco: "Goa",
-                      ),
-                      ListLoja(
-                        img: "pop_corn.jpg",
-                        titulo: "A.Z - Comercial",
-                        endereco: "Kasseque de frente ao kero",
-                      ),
-                      ListLoja(
-                        img: "cinnamon-roll-4719023_960_720.jpg",
-                        titulo: "Z.A.K - Serviços,LDA",
-                        endereco: "Praça do 4 de Abril",
-                      ),
-                      ListLoja(
-                        img: "pop_corn.jpg",
-                        titulo: "A.Z - Comercial",
-                        endereco: "Kasseque de frente ao kero",
-                      ),
-                      ListLoja(
-                        img: "cinnamon-roll-4719023_960_720.jpg",
-                        titulo: "Z.A.K - Serviços,LDA",
-                        endereco: "Praça do 4 de Abril",
-                      ),
-                    ],
+                Obx(
+                  () => SizedBox(
+                    height: Get.height / 1.1,
+                    width: Get.width,
+                    child: controller.listParceiro.isNotEmpty
+                        ? ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            itemCount: controller.listParceiro.length,
+                            itemBuilder: (context, index) {
+                              return ListLoja(
+                                img: "cinnamon-roll-4719023_960_720.jpg",
+                                titulo: controller.listParceiro[index].nome
+                                    .toString(),
+                                endereco: controller
+                                    .listParceiro[index].endereco
+                                    .toString(),
+                                parceiro: controller.listParceiro[index],
+                              );
+                            })
+                        : Center(
+                            child: Container(
+                              height: 50,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: SizedBox.expand(
+                                child: TextButton(
+                                  child: CircularProgressIndicator(
+                                    color: Layout.primary(),
+                                  ),
+                                  onPressed: () {},
+                                ),
+                              ),
+                            ),
+                          ),
                   ),
                 ),
               ],

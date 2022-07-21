@@ -12,7 +12,7 @@ class DetalhesLojaView extends GetView<DetalhesLojaController> {
 
   @override
   Widget build(BuildContext context) {
-    NumberFormat formatter = NumberFormat("###,###.00 kz", 'pt_PT');
+    //NumberFormat formatter = NumberFormat("###,###.00 kz", 'pt_PT');
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -47,13 +47,14 @@ class DetalhesLojaView extends GetView<DetalhesLojaController> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            //Titulo
                             Container(
                               margin: EdgeInsets.only(
                                 top: Get.height / 100,
                                 left: Get.width / 30,
                               ),
                               child: Text(
-                                "Bem Barato",
+                                controller.parceiro.nome.toString(),
                                 style: TextStyle(
                                   color: Layout.dark(),
                                   fontSize: 25,
@@ -67,7 +68,7 @@ class DetalhesLojaView extends GetView<DetalhesLojaController> {
                                 left: Get.width / 30,
                               ),
                               child: Text(
-                                "948779728",
+                                controller.parceiro.contacto.toString(),
                                 style: TextStyle(
                                   color: Layout.primary(),
                                   fontSize: 15,
@@ -81,7 +82,7 @@ class DetalhesLojaView extends GetView<DetalhesLojaController> {
                                 left: Get.width / 30,
                               ),
                               child: Text(
-                                "bembarato@gmail.com",
+                                controller.parceiro.email.toString(),
                                 style: TextStyle(
                                   color: Layout.primary(),
                                   fontSize: 15,
@@ -98,7 +99,7 @@ class DetalhesLojaView extends GetView<DetalhesLojaController> {
                                     left: Get.width / 30,
                                   ),
                                   child: Text(
-                                    "Kasseque enfrente ao Kero",
+                                    controller.parceiro.endereco.toString(),
                                     style: TextStyle(
                                       color: Layout.primary(),
                                       fontSize: 18,
@@ -124,7 +125,7 @@ class DetalhesLojaView extends GetView<DetalhesLojaController> {
                       left: Get.width / 30,
                     ),
                     child: Text(
-                      "Aberto das 08h as 17h",
+                      "Aberto das " + controller.parceiro.horario.toString(),
                       style: TextStyle(
                         color: Layout.dark(),
                         fontSize: 20,
@@ -152,11 +153,12 @@ class DetalhesLojaView extends GetView<DetalhesLojaController> {
                           left: 1,
                         ),
                         child: Icon(
-                          Icons.check_circle,
-                          color: Layout.success(),
-                          //Icons.cancel,
-                          //color: Layout.danger(),
-
+                          controller.parceiro.entregas == 1
+                              ? Icons.check_circle
+                              : Icons.cancel,
+                          color: controller.parceiro.entregas == 1
+                              ? Layout.success()
+                              : Layout.danger(),
                           size: 30,
                         ),
                       ),
@@ -188,53 +190,45 @@ class DetalhesLojaView extends GetView<DetalhesLojaController> {
                     ],
                   ),
                   //Lista
-                  Container(
-                    height: Get.height / 1.3,
-                    width: Get.width,
-                    child: ListView(
-                      scrollDirection: Axis.vertical,
-                      children: const [
-                        ListProdutoLoja(
-                          img: "margherita-pizza-993274_960_720.jpg",
-                          titulo: "Arroz Sam",
-                          preco: 14000,
-                          data: "04/2023",
-                          stok: "Tem",
-                          st: 0,
-                        ),
-                        ListProdutoLoja(
-                          img: "pop_corn.jpg",
-                          titulo: "Massa Tio luca",
-                          preco: 15000,
-                          data: "09/2023",
-                          stok: "Tem",
-                          st: 0,
-                        ),
-                        ListProdutoLoja(
-                          img: "margherita-pizza-993274_960_720.jpg",
-                          titulo: "Farinha Tio Lucas 10kg",
-                          preco: 14000,
-                          data: "05/2023",
-                          stok: "Terminou",
-                          st: 1,
-                        ),
-                        ListProdutoLoja(
-                          img: "pop_corn.jpg",
-                          titulo: "Farinha Primeira",
-                          preco: 15000,
-                          data: "02/2023",
-                          stok: "Tem",
-                          st: 0,
-                        ),
-                        ListProdutoLoja(
-                          img: "cinnamon-roll-4719023_960_720.jpg",
-                          titulo: "Gasosa",
-                          preco: 8500,
-                          data: "12/2023",
-                          stok: "Terminou",
-                          st: 1,
-                        ),
-                      ],
+                  Obx(
+                    () => SizedBox(
+                      height: Get.height / 1.3,
+                      width: Get.width,
+                      child: controller.listProduto.isNotEmpty
+                          ? ListView.builder(  
+                              scrollDirection: Axis.vertical,
+                              itemCount: controller.listProduto.length,
+                              itemBuilder: (context, index) {
+                                return ListProdutoLoja(
+                                  img: "margherita-pizza-993274_960_720.jpg",
+                                  titulo: controller
+                                      .listProduto[index].produtoNome
+                                      .toString(),
+                                  preco: controller.listProduto[index].preco!
+                                      .toDouble(),
+                                  data: controller
+                                      .listProduto[index].dataValidad!,
+                                  stok: controller
+                                      .listProduto[index].estadoStok!
+                                      .toInt(),
+                                );
+                              })
+                          : Center(
+                              child: Container(
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: SizedBox.expand(
+                                  child: TextButton(
+                                    child: CircularProgressIndicator(
+                                      color: Layout.primary(),
+                                    ),
+                                    onPressed: () {},
+                                  ),
+                                ),
+                              ),
+                            ),
                     ),
                   ),
                 ],

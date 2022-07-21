@@ -1,11 +1,12 @@
 import 'dart:convert';
 
+import 'package:bompreco/app/data/model/parceiro.dart';
 import 'package:bompreco/app/routes/app_routes.dart';
 import 'package:bompreco/app/theme/layout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
+import 'package:get_storage/get_storage.dart';
 
 class ListLoja extends StatelessWidget {
   const ListLoja({
@@ -13,15 +14,19 @@ class ListLoja extends StatelessWidget {
     required this.img,
     required this.titulo,
     required this.endereco,
+    required this.parceiro,
   }) : super(key: key);
 
   final String img;
   final String titulo;
   final String endereco;
+  final Parceiro parceiro;
   @override
   Widget build(BuildContext context) {
+    final box = GetStorage('BonsPreco');
     return GestureDetector(
       onTap: () {
+        box.write("Parceiro", parceiro);
         Get.toNamed(Routes.DETALHES_LOJA);
       },
       child: Container(
