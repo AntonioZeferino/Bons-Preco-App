@@ -1,4 +1,5 @@
 import 'package:bompreco/app/global/widgets/bt_normal.dart';
+import 'package:bompreco/app/global/widgets/list_produto_reserva.dart';
 import 'package:bompreco/app/global/widgets/list_produto_sistema.dart';
 import 'package:bompreco/app/global/widgets/voltar_top.dart';
 import 'package:bompreco/app/modules/minhas_reservas/minhas_reservas_controller.dart';
@@ -123,39 +124,160 @@ class MinhasReservasView extends GetView<MinhasReservasController> {
                     ),
                   ),
                   //Lista
-                  SizedBox(
-                    height: Get.height / 1.3,
-                    width: Get.width,
-                    child: ListView(
-                      scrollDirection: Axis.vertical,
-                      children: const [
-                        ListProdutoSistLoja(
-                          img: "margherita-pizza-993274_960_720.jpg",
-                          titulo: "Arroz Sam",
-                          id: 0,
-                        ),
-                        ListProdutoSistLoja(
-                          img: "pop_corn.jpg",
-                          titulo: "Massa Tio luca",
-                          id: 0,
-                        ),
-                        ListProdutoSistLoja(
-                          img: "margherita-pizza-993274_960_720.jpg",
-                          titulo: "Farinha Tio Lucas 10kg",
-                          id: 1,
-                        ),
-                        ListProdutoSistLoja(
-                          img: "pop_corn.jpg",
-                          titulo: "Farinha Primeira",
-                          id: 0,
-                        ),
-                        ListProdutoSistLoja(
-                          img: "cinnamon-roll-4719023_960_720.jpg",
-                          titulo: "Gasosa",
-                          id: 1,
-                        ),
-                      ],
-                    ),
+                  Obx(
+                    () => controller.res == 0
+                        ? SizedBox(
+                            height: Get.height / 1.3,
+                            width: Get.width,
+                            child: controller.listSelecionado.isNotEmpty
+                                ? ListView.builder(
+                                    scrollDirection: Axis.vertical,
+                                    itemCount:
+                                        controller.listSelecionado.length,
+                                    itemBuilder: (context, index) {
+                                      return ListProdutoReserva(
+                                        idReserva: controller
+                                            .listSelecionado[index].idReserva!,
+                                        idParceiro: controller
+                                            .listSelecionado[index].idParceiro!,
+                                        idProduto: controller
+                                            .listSelecionado[index].idProduto!,
+                                        idUser: controller
+                                            .listSelecionado[index].idUser!,
+                                        estado: controller
+                                            .listSelecionado[index].estado!,
+                                        produtImg:
+                                            "margherita-pizza-993274_960_720.jpg",
+                                        produtNome: controller
+                                            .listSelecionado[index].produtNome
+                                            .toString(),
+                                        parceiNome: controller
+                                            .listSelecionado[index].parceiNome
+                                            .toString(),
+                                      );
+                                    })
+                                : Center(
+                                    child: Container(
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: SizedBox.expand(
+                                        child: TextButton(
+                                          child: CircularProgressIndicator(
+                                            color: Layout.primary(),
+                                          ),
+                                          onPressed: () {},
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                          )
+                        : controller.res == 1
+                            ? SizedBox(
+                                height: Get.height / 1.3,
+                                width: Get.width,
+                                child: controller.listEnviado.isNotEmpty
+                                    ? ListView.builder(
+                                        scrollDirection: Axis.vertical,
+                                        itemCount:
+                                            controller.listEnviado.length,
+                                        itemBuilder: (context, index) {
+                                          return ListProdutoReserva(
+                                            idReserva: controller
+                                                .listEnviado[index].idReserva!,
+                                            idParceiro: controller
+                                                .listEnviado[index].idParceiro!,
+                                            idProduto: controller
+                                                .listEnviado[index].idProduto!,
+                                            idUser: controller
+                                                .listEnviado[index].idUser!,
+                                            estado: controller
+                                                .listEnviado[index].estado!,
+                                            produtImg:
+                                                "margherita-pizza-993274_960_720.jpg",
+                                            produtNome: controller
+                                                .listEnviado[index].produtNome
+                                                .toString(),
+                                            parceiNome: controller
+                                                .listEnviado[index].parceiNome
+                                                .toString(),
+                                          );
+                                        })
+                                    : Center(
+                                        child: Container(
+                                          height: 50,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                          child: SizedBox.expand(
+                                            child: TextButton(
+                                              child: CircularProgressIndicator(
+                                                color: Layout.primary(),
+                                              ),
+                                              onPressed: () {},
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                              )
+                            : controller.res == 2
+                                ? SizedBox(
+                                    height: Get.height / 1.3,
+                                    width: Get.width,
+                                    child: controller.listAceite.isNotEmpty
+                                        ? ListView.builder(
+                                            scrollDirection: Axis.vertical,
+                                            itemCount:
+                                                controller.listAceite.length,
+                                            itemBuilder: (context, index) {
+                                              return ListProdutoReserva(
+                                                idReserva: controller
+                                                    .listAceite[index]
+                                                    .idReserva!,
+                                                idParceiro: controller
+                                                    .listAceite[index]
+                                                    .idParceiro!,
+                                                idProduto: controller
+                                                    .listAceite[index]
+                                                    .idProduto!,
+                                                idUser: controller
+                                                    .listAceite[index].idUser!,
+                                                estado: controller
+                                                    .listAceite[index].estado!,
+                                                produtImg:
+                                                    "margherita-pizza-993274_960_720.jpg",
+                                                produtNome: controller
+                                                    .listAceite[index]
+                                                    .produtNome
+                                                    .toString(),
+                                                parceiNome: controller
+                                                    .listAceite[index]
+                                                    .parceiNome
+                                                    .toString(),
+                                              );
+                                            })
+                                        : Center(
+                                            child: Container(
+                                              height: 50,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                              child: SizedBox.expand(
+                                                child: TextButton(
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                    color: Layout.primary(),
+                                                  ),
+                                                  onPressed: () {},
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                  )
+                                : const Text('Nada!'),
                   ),
                 ],
               )

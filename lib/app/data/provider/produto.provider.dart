@@ -20,7 +20,7 @@ class ProdutoProvider {
       if (200 == response.statusCode) {
         return json.decode(response.body);
       } else {
-        Conexao().dialogSMS('Produtos', "Erro Produto");
+        Conexao().dialogSMS('Produtos', "Erro Produtos");
       }
     } catch (e) {
       print('Erro Produtos $e');
@@ -38,6 +38,31 @@ class ProdutoProvider {
 
       response = await http.post(Uri.parse(root + "lojasLigadasProduto"),
           headers: headers);
+
+      if (200 == response.statusCode) {
+        return json.decode(response.body);
+      } else {
+        Conexao().dialogSMS('Produtos', "Erro Produto");
+      }
+    } catch (e) {
+      print('Erro Produtos $e');
+    }
+    return null;
+  }
+
+  getAllProdutoLojas(int id) async {
+    var response;
+    try {
+      var headers = {
+        'Content-Type': 'application/json',
+        //'authorization': 'Bearer $token'
+      };
+      final body = {
+        'id': id,
+      };
+
+      response = await http.post(Uri.parse(root + "produtoLojas"),
+          body: json.encode(body), headers: headers);
 
       if (200 == response.statusCode) {
         return json.decode(response.body);

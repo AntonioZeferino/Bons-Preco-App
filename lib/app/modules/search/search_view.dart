@@ -92,6 +92,7 @@ class SearchView extends GetView<SearchController> {
                             itemCount: controller.listProduto.length,
                             itemBuilder: (context, index) {
                               return ListProdutosTop(
+                                id: controller.listProduto[index].id,
                                 img: "cinnamon-roll-4719023_960_720.jpg",
                                 titulo: controller.listProduto[index].nome
                                     .toString(),

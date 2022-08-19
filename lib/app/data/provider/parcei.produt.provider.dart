@@ -53,10 +53,34 @@ class ParceiProdutProvider {
     return null;
   }
 
+  getAllLojaParceiProdut(int parc, String token) async {
+    http.Response response;
+    try {
+      var headers = {
+        'Content-Type': 'application/json',
+        'authorization': 'Bearer $token'
+      };
+
+      final body = {'idpar': parc};
+
+      response = await http.post(Uri.parse(root + "lojaReserva"),
+          headers: headers, body: json.encode(body));
+
+      if (200 == response.statusCode) {
+        return json.decode(response.body);
+      } else {
+        Conexao().dialogSMS('Reservas', "Erro Reservas");
+      }
+    } catch (e) {
+      print('Erro Reservas $e');
+    }
+    return null;
+  }
+
   registerParceiProd(ParceiProdut parProd, String token) async {
     try {
-      http.MultipartRequest request = new http.MultipartRequest(
-          "POST", Uri.parse(root + 'parceiprodutStore'));
+      http.MultipartRequest request =
+          http.MultipartRequest("POST", Uri.parse(root + 'parceiprodutStore'));
 
       request.headers['Content-Type'] = 'application/json';
       request.headers['authorization'] = 'Bearer $token';
@@ -72,7 +96,7 @@ class ParceiProdutProvider {
       if (200 == response.statusCode) {
         return true;
       } else {
-        Conexao().dialogSMS('Registrar', "Erro ao enviar o Mensagem!");
+        Conexao().dialogSMS('Registrar', "Erro ao enviar a Mensagem!");
         return false;
       }
     } catch (e) {

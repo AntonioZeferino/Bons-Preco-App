@@ -53,49 +53,20 @@ class AddProdutoLojaView extends GetView<AddProdutoLojaController> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Obx(
-                          () => GestureDetector(
-                            onTap: () {
-                              controller.res.value = 0;
-                            },
-                            child: Container(
-                              height: Get.height / 18,
-                              // width: Get.width / 3,
-                              color: controller.res.value == 0
-                                  ? Layout.primaryWhite()
-                                  : Layout.primary(),
-                              padding: const EdgeInsets.all(8),
-                              child: const Center(
-                                child: Text(
-                                  'Produtos do Sistema',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Obx(
-                          () => GestureDetector(
-                            onTap: () {
-                              controller.res.value = 1;
-                            },
-                            child: Container(
-                              height: Get.height / 18,
-                              //width: Get.width / 3,
-                              padding: const EdgeInsets.all(8),
-                              color: controller.res.value == 1
-                                  ? Layout.primaryWhite()
-                                  : Layout.primary(),
-                              child: const Center(
-                                child: Text(
-                                  'Produto ligado a Loja',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                        GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                            height: Get.height / 18,
+                            // width: Get.width / 3,
+
+                            padding: const EdgeInsets.all(8),
+                            child: Center(
+                              child: Text(
+                                'Produtos do Sistema',
+                                style: TextStyle(
+                                  color: Layout.primaryWhite(),
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ),
@@ -105,38 +76,40 @@ class AddProdutoLojaView extends GetView<AddProdutoLojaController> {
                     ),
                   ),
                   //Lista
-                  SizedBox(
-                    height: Get.height / 1.3,
-                    width: Get.width,
-                    child: ListView(
-                      scrollDirection: Axis.vertical,
-                      children: const [
-                        ListProdutoSistLoja(
-                          img: "margherita-pizza-993274_960_720.jpg",
-                          titulo: "Arroz Sam",
-                          id: 0,
-                        ),
-                        ListProdutoSistLoja(
-                          img: "pop_corn.jpg",
-                          titulo: "Massa Tio luca",
-                          id: 0,
-                        ),
-                        ListProdutoSistLoja(
-                          img: "margherita-pizza-993274_960_720.jpg",
-                          titulo: "Farinha Tio Lucas 10kg",
-                          id: 1,
-                        ),
-                        ListProdutoSistLoja(
-                          img: "pop_corn.jpg",
-                          titulo: "Farinha Primeira",
-                          id: 0,
-                        ),
-                        ListProdutoSistLoja(
-                          img: "cinnamon-roll-4719023_960_720.jpg",
-                          titulo: "Gasosa",
-                          id: 1,
-                        ),
-                      ],
+                  Obx(
+                    () => SizedBox(
+                      height: Get.height / 1.3,
+                      width: Get.width,
+                      child: controller.listProduto.isNotEmpty
+                          ? ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              itemCount: controller.listProduto.length,
+                              itemBuilder: (context, index) {
+                                return ListProdutoSistLoja(
+                                  idParceiro: controller.parceiro.id!,
+                                  idProduto: controller.listProduto[index].id!,
+                                  produtImg:
+                                      "margherita-pizza-993274_960_720.jpg",
+                                  produtNome: controller.listProduto[index].nome
+                                      .toString(),
+                                );
+                              })
+                          : Center(
+                              child: Container(
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: SizedBox.expand(
+                                  child: TextButton(
+                                    child: CircularProgressIndicator(
+                                      color: Layout.primary(),
+                                    ),
+                                    onPressed: () {},
+                                  ),
+                                ),
+                              ),
+                            ),
                     ),
                   ),
                 ],

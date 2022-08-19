@@ -16,7 +16,7 @@ class ProdutoLojaView extends GetView<ProdutoLojaController> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Container(
+        child: SizedBox(
           height: Get.height,
           width: Get.width,
           child: ListView(children: [
@@ -72,40 +72,50 @@ class ProdutoLojaView extends GetView<ProdutoLojaController> {
                   ],
                 ),
                 //Lista Top
-                Container(
-                  height: Get.height / 2,
-                  width: Get.width,
-                  child: ListView(
-                    scrollDirection: Axis.vertical,
-                    children: const [
-                      ListLojaPreco(
-                        img: "margherita-pizza-993274_960_720.jpg",
-                        titulo: "Bem Barato",
-                        preco: 14000,
-                        endereco: "Goa",
-                        data: "12/2023",
-                        stok: "Tem",
-                        st: 0,
-                      ),
-                      ListLojaPreco(
-                        img: "pop_corn.jpg",
-                        titulo: "A.Z - Comercial",
-                        preco: 15000,
-                        endereco: "Kasseque de frente ao kero",
-                        data: "02/2024",
-                        stok: "Tem",
-                        st: 0,
-                      ),
-                      ListLojaPreco(
-                        img: "cinnamon-roll-4719023_960_720.jpg",
-                        titulo: "Z.A.K - Serviços,LDA",
-                        preco: 15500,
-                        endereco: "Praça do 4 de Abril",
-                        data: "08/2022",
-                        stok: "Terminou",
-                        st: 1,
-                      ),
-                    ],
+                Obx(
+                  () => SizedBox(
+                    height: Get.height / 2,
+                    width: Get.width,
+                    child: controller.listProduto.isNotEmpty
+                        ? ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            itemCount: controller.listProduto.length,
+                            itemBuilder: ((context, index) {
+                              return ListLojaPreco(
+                                produtId:
+                                    controller.listProduto[index].produtoId,
+                                parceirId:
+                                    controller.listProduto[index].parceiroId,
+                                userId: controller.user.id,
+                                titulo: controller
+                                    .listProduto[index].parceiroNome
+                                    .toString(),
+                                preco: controller.listProduto[index].preco!
+                                    .toDouble(),
+                                endereco: controller.listProduto[index].endereco
+                                    .toString(),
+                                data: controller.listProduto[index].dataValidad
+                                    .toString(),
+                                stok: controller.listProduto[index].estadoStok,
+                              );
+                            }),
+                          )
+                        : Center(
+                            child: Container(
+                              height: 50,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: SizedBox.expand(
+                                child: TextButton(
+                                  child: CircularProgressIndicator(
+                                    color: Layout.primary(),
+                                  ),
+                                  onPressed: () {},
+                                ),
+                              ),
+                            ),
+                          ),
                   ),
                 ),
               ],

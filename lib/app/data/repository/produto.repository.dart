@@ -1,12 +1,14 @@
 import 'package:bompreco/app/data/model/produto.dart';
+import 'package:bompreco/app/data/model/produto_da_loja.dart';
 import 'package:bompreco/app/data/model/produto_list.dart';
+import 'package:bompreco/app/data/model/produto_loja.dart';
 import 'package:bompreco/app/data/provider/produto.provider.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProdutoRepository {
   final ProdutoProvider api = ProdutoProvider();
 
-  produtoSelect(Produto produto) async {
+  produtoSelect() async {
     List<Produto> list = <Produto>[];
     var response = await api.getAll();
     response.forEach((e) {
@@ -26,11 +28,21 @@ class ProdutoRepository {
     return list;
   }
 
+  produtoLojasSelect(int id) async {
+    List<produtoLoja> list = <produtoLoja>[];
+    var response = await api.getAllProdutoLojas(id);
+    response.forEach((e) {
+      list.add(produtoLoja.fromJson(e));
+    });
+
+    return list;
+  }
+
   produtoDaLojaSelect(int id) async {
-    List<Produto> list = <Produto>[];
+    List<produtoDaLoja> list = <produtoDaLoja>[];
     var response = await api.getAllProdutoDaLoja(id);
     response.forEach((e) {
-      list.add(Produto.fromJson(e));
+      list.add(produtoDaLoja.fromJson(e));
     });
 
     return list;

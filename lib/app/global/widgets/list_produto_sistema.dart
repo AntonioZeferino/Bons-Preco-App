@@ -1,25 +1,138 @@
+import 'package:bompreco/app/data/conexao.dart';
+import 'package:bompreco/app/data/model/parcei_produt.dart';
+import 'package:bompreco/app/data/repository/parcei.produt.repository.dart';
+import 'package:bompreco/app/global/widgets/input_normal.dart';
+import 'package:bompreco/app/modules/add_produto_loja/add_produto_loja_controller.dart';
 import 'package:bompreco/app/theme/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
+import 'package:get_storage/get_storage.dart';
 
 class ListProdutoSistLoja extends StatelessWidget {
   const ListProdutoSistLoja({
     Key? key,
-    required this.img,
-    required this.titulo,
-    required this.id,
+    required this.idProduto,
+    required this.idParceiro,
+    required this.produtImg,
+    required this.produtNome,
   }) : super(key: key);
 
-  final String img;
-  final String titulo;
-  final int id;
+  final int idProduto;
+  final int idParceiro;
+  final String produtImg;
+  final String produtNome;
 
   @override
   Widget build(BuildContext context) {
+    final box = GetStorage('BonsPreco');
+    AddProdutoLojaController controller = AddProdutoLojaController();
+    final repository = ParceiProdutRepository();
+    ParceiProdut parceiProdut = ParceiProdut();
+    TextEditingController precoCtrl = TextEditingController();
+    TextEditingController dataCtrl = TextEditingController();
+    RxBool valor = false.obs;
+    RxBool loading = false.obs;
+    RxString token = ''.obs;
+    token.value = box.read('accessToken');
     return GestureDetector(
       onTap: () {
-        //Get.toNamed(Routes.DETALHES_LOJA);
+        Get.defaultDialog(
+          title: "Adicionar Produto!",
+          titleStyle: TextStyle(
+            fontSize: 22,
+            color: Layout.dark(),
+            fontWeight: FontWeight.bold,
+          ),
+          content: Container(
+              //padding: EdgeInsets.all(Get.width / 32),
+              child: Column(
+            children: [
+              Center(
+                child: Text(
+                  produtNome,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                    color: Layout.primary(),
+                  ),
+                ),
+              ),
+              //Preco
+              Obx(
+                () => InputNormal(
+                  hintText: 'Preço',
+                  icons: Icons.monetization_on,
+                  controller: precoCtrl,
+                  enabled: !loading.value,
+                  onChanged: (value) {},
+                ),
+              ),
+              //Data
+              Obx(
+                () => InputNormal(
+                  hintText: 'Data',
+                  icons: Icons.date_range_rounded,
+                  controller: dataCtrl,
+                  enabled: !loading.value,
+                  onChanged: (value) {},
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(
+                  top: 12,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Obx(
+                      () => Checkbox(
+                        checkColor: Layout.dark(),
+                        activeColor: Layout.primary(),
+                        value: valor.value,
+                        onChanged: (value) {
+                          valor.value = value!;
+                        },
+                      ),
+                    ),
+                    Text(
+                      'Stock',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Layout.dark(),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          )),
+          textConfirm: 'Guardar',
+          confirmTextColor: Layout.primaryWhite(),
+          onConfirm: () async {
+            if (precoCtrl.text != '' && dataCtrl.text != '' && valor.value) {
+              parceiProdut.idParceiro = idParceiro;
+              parceiProdut.idProduto = idProduto;
+              parceiProdut.preco = int.parse(precoCtrl.text);
+              parceiProdut.dataValidad = dataCtrl.text;
+              parceiProdut.estadoStok = valor.value ? 1 : 0;
+              var res = await repository.parceiProdutInsert(
+                  parceiProdut, token.value);
+              if (res) {
+                precoCtrl.text = "";
+                dataCtrl.text = "";
+                Conexao().dialogSMS('Produto', 'Enviado com sucesso!');
+                controller.pegarProdutSistema();
+                loading.value = false;
+              } else {
+                loading.value = false;
+                print("Erro Res: " + res.toString());
+              }
+            }
+          },
+          textCancel: 'Cancelar',
+          onCancel: () {},
+        );
       },
       child: Container(
         height: Get.height / 6,
@@ -57,7 +170,7 @@ class ListProdutoSistLoja extends StatelessWidget {
                 color: Layout.primary(),
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
                 image: DecorationImage(
-                  image: AssetImage('assets/$img'),
+                  image: AssetImage('assets/$produtImg'),
                   fit: BoxFit.fill,
                 ),
               ),
@@ -74,10 +187,10 @@ class ListProdutoSistLoja extends StatelessWidget {
                     left: Get.width / 55,
                   ),
                   child: Text(
-                    titulo,
+                    produtNome,
                     style: TextStyle(
                       color: Layout.primary(),
-                      fontSize: 18,
+                      fontSize: 17,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
@@ -86,7 +199,7 @@ class ListProdutoSistLoja extends StatelessWidget {
             ),
             //Icon Reservar
             IconButton(
-              onPressed: () {},
+              onPressed: () async {},
               icon: const Icon(
                 Icons.double_arrow_rounded,
               ),

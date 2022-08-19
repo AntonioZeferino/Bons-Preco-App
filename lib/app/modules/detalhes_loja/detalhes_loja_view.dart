@@ -1,11 +1,9 @@
-import 'package:bompreco/app/global/widgets/list_loja_preco.dart';
 import 'package:bompreco/app/global/widgets/list_produto_loja.dart';
 import 'package:bompreco/app/global/widgets/voltar_top.dart';
 import 'package:bompreco/app/modules/detalhes_loja/detalhes_loja_controller.dart';
 import 'package:bompreco/app/theme/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
 class DetalhesLojaView extends GetView<DetalhesLojaController> {
   const DetalhesLojaView({Key? key}) : super(key: key);
@@ -195,11 +193,16 @@ class DetalhesLojaView extends GetView<DetalhesLojaController> {
                       height: Get.height / 1.3,
                       width: Get.width,
                       child: controller.listProduto.isNotEmpty
-                          ? ListView.builder(  
+                          ? ListView.builder(
                               scrollDirection: Axis.vertical,
                               itemCount: controller.listProduto.length,
                               itemBuilder: (context, index) {
                                 return ListProdutoLoja(
+                                  userId: controller.user.id,
+                                  produtId:
+                                      controller.listProduto[index].produtoId,
+                                  parceirId:
+                                      controller.listProduto[index].parceiroId,
                                   img: "margherita-pizza-993274_960_720.jpg",
                                   titulo: controller
                                       .listProduto[index].produtoNome

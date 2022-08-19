@@ -1,4 +1,6 @@
+import 'package:bompreco/app/data/model/loja.reserva.dart';
 import 'package:bompreco/app/data/model/reserva.dart';
+import 'package:bompreco/app/data/model/user_reserva.dart';
 import 'package:bompreco/app/data/provider/reserva.provider.dart';
 
 class ReservaRepository {
@@ -9,6 +11,16 @@ class ReservaRepository {
     var response = await api.getAll(token);
     response.forEach((e) {
       list.add(Reserva.fromJson(e));
+    });
+
+    return list;
+  }
+
+  userReservaSelect(int parc, String token) async {
+    List<UserReserva> list = <UserReserva>[];
+    var response = await api.getAllUserReserva(parc, token);
+    response.forEach((e) {
+      list.add(UserReserva.fromJson(e));
     });
 
     return list;
@@ -25,6 +37,16 @@ class ReservaRepository {
 
   reservaUpdate(Reserva reserva, String token) async {
     bool json = await api.updateParceiro(reserva, token);
+
+    if (json) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  reservaUpdateEstado(Reserva reserva, String token) async {
+    bool json = await api.updateParceiroEstado(reserva, token);
 
     if (json) {
       return true;

@@ -114,6 +114,7 @@ class HomeView extends GetView<HomeController> {
                             itemCount: controller.listProdutoRecentes.length,
                             itemBuilder: (context, index) {
                               return ListProdutosRecentes(
+                                id: controller.listProduto[index].id,
                                 img: "margherita-pizza-993274_960_720.jpg",
                                 titulo: controller
                                     .listProdutoRecentes[index].nome
@@ -168,6 +169,7 @@ class HomeView extends GetView<HomeController> {
                             itemCount: controller.listProdutoTop.length,
                             itemBuilder: (context, index) {
                               return ListProdutosTop(
+                                id: controller.listProduto[index].id,
                                 img: "pop_corn.jpg",
                                 titulo: controller.listProdutoTop[index].nome
                                     .toString(),

@@ -1,3 +1,4 @@
+import 'package:bompreco/app/data/model/loja.reserva.dart';
 import 'package:bompreco/app/data/model/parcei_produt.dart';
 import 'package:bompreco/app/data/provider/parcei.produt.provider.dart';
 
@@ -19,6 +20,16 @@ class ParceiProdutRepository {
     var response = await api.getAllID(id);
     response.forEach((e) {
       list.add(ParceiProdut.fromJson(e));
+    });
+
+    return list;
+  }
+
+  lojaParceiProdutSelect(int parc, String token) async {
+    List<LojaReserva> list = <LojaReserva>[];
+    var response = await api.getAllLojaParceiProdut(parc, token);
+    response.forEach((e) {
+      list.add(LojaReserva.fromJson(e));
     });
 
     return list;

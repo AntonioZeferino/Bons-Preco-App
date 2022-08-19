@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'package:bompreco/app/data/conexao.dart';
 import 'package:bompreco/app/data/model/parceiro.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 
@@ -30,20 +28,20 @@ class ParceiroProvider {
     return null;
   }
 
-  getAllUser(int id, String token) async {
-    //http.Response response;
+  getAllUser(String id, String token) async {
+    http.Response response;
     try {
       var headers = {
         'Content-Type': 'application/json',
-        'authorization': 'Bearer $token'
+        //'authorization': 'Bearer $token'
       };
 
       final body = {
         'id': id,
       };
 
-      var response = await http.post(Uri.parse(root + 'userParceiro'),
-          body: json.encode(body));
+      response = await http.post(Uri.parse(root + 'userParceiro'),
+          body: json.encode(body), headers: headers);
 
       if (200 == response.statusCode) {
         return json.decode(response.body);
@@ -51,7 +49,7 @@ class ParceiroProvider {
         Conexao().dialogSMS('Parceiros', "Erro Parceiros");
       }
     } catch (e) {
-      print('Erro Parceiros $e');
+      print('Erro Parceiros = $e');
     }
     return null;
   }
@@ -130,10 +128,8 @@ class ParceiroProvider {
         return false;
       }
     } catch (e) {
-      Get.defaultDialog(
-        title: 'Actualizar',
-        content: Text("$e"),
-      );
+      Conexao().dialogSMS('Actualizar', "$e");
+
       print(e);
       return false;
     }

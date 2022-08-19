@@ -7,11 +7,13 @@ import 'package:get_storage/get_storage.dart';
 class ListProdutosRecentes extends StatelessWidget {
   const ListProdutosRecentes({
     Key? key,
+    required this.id,
     required this.img,
     required this.titulo,
     required this.nLojas,
   }) : super(key: key);
 
+  final int? id;
   final String img;
   final String titulo;
   final String nLojas;
@@ -21,6 +23,7 @@ class ListProdutosRecentes extends StatelessWidget {
     final box = GetStorage('BonsPreco');
     return GestureDetector(
       onTap: () {
+        box.write("ProdutoID", id);
         box.write("img", img);
         box.write("titulo", titulo);
         box.write("nLojas", nLojas);

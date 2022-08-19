@@ -16,10 +16,9 @@ class ParceiroRepository {
     return list;
   }
 
-  parceiroSelectUser(int id, String token) async {
+  parceiroSelectUser(String id, String token) async {
     List<Parceiro> list = <Parceiro>[];
     var response = await api.getAllUser(id, token);
-    print("User Respons=" + Parceiro.fromJson(response).toString());
     response.forEach((e) {
       list.add(Parceiro.fromJson(e));
     });

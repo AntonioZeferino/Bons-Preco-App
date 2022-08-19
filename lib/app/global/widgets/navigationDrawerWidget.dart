@@ -1,6 +1,7 @@
 import 'package:bompreco/app/data/conexao.dart';
 import 'package:bompreco/app/data/model/parceiro.dart';
 import 'package:bompreco/app/data/model/user.dart';
+import 'package:bompreco/app/data/provider/parceiro.provider.dart';
 import 'package:bompreco/app/data/repository/parceiro.repository.dart';
 import 'package:bompreco/app/routes/app_routes.dart';
 import 'package:bompreco/app/theme/layout.dart';
@@ -14,7 +15,9 @@ class NavigationDrawerWidget extends StatelessWidget {
   User user = User();
 
   Parceiro parceiro = Parceiro();
+  RxList<Parceiro> listParceiro = <Parceiro>[].obs;
   ParceiroRepository parceiroRepository = ParceiroRepository();
+
   //static String root = Conexao().getImgUser();
   RxString token = ''.obs;
 
@@ -59,7 +62,7 @@ class NavigationDrawerWidget extends StatelessWidget {
                   Get.toNamed(Routes.MINHAS_RESERVAS);
                 } else {
                   Conexao().dialogSMS(
-                      'Aviso!', "Porfavor faça um Login ou Criar um conta!");
+                      'Aviso!', "Porfavor faça um Login ou Criar uma conta!");
                 }
               },
             ),
@@ -85,26 +88,27 @@ class NavigationDrawerWidget extends StatelessWidget {
                   Get.toNamed(Routes.CRIAR_LOJA);
                 } else {
                   Conexao().dialogSMS(
-                      'Aviso!', "Porfavor faça um Login ou Criar um conta!");
+                      'Aviso!', "Porfavor faça um Login ou Criar uma conta!");
                 }
               },
             ),
             buildMenuItem(
               text: 'Minha Loja',
               icon: Icons.shopify,
-              onClicked: () {
+              onClicked: () async {
                 if (user.id != null) {
-                  parceiro = parceiroRepository.parceiroSelectUser(
-                      user.id!, token.value);
-                  if (parceiro.donoIdUser == user.id!) {
-                    box.write('Parceiro', parceiro);
+                  listParceiro.value = await parceiroRepository
+                      .parceiroSelectUser(user.id.toString(), token.value);
+
+                  if (listParceiro[0].donoIdUser == user.id!) {
+                    box.write('Parceiro', listParceiro[0]);
                     Get.toNamed(Routes.MINHA_LOJA);
                   } else {
                     Conexao().dialogSMS('Aviso!', "Não tens uma Loja criada!");
                   }
                 } else {
                   Conexao().dialogSMS(
-                      'Aviso!', "Porfavor faça um Login ou Criar um conta!");
+                      'Aviso!', "Porfavor faça um Login ou Criar uma conta!");
                 }
               },
             ),
