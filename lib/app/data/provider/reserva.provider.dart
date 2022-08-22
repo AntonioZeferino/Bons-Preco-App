@@ -55,10 +55,34 @@ class ReservaProvider {
     return null;
   }
 
+  getAllParceitReserva(int parc, String token) async {
+    http.Response response;
+    try {
+      var headers = {
+        'Content-Type': 'application/json',
+        'authorization': 'Bearer $token'
+      };
+
+      final body = {'idpar': parc};
+
+      response = await http.post(Uri.parse(root + "lojaReserva"),
+          headers: headers, body: json.encode(body));
+
+      if (200 == response.statusCode) {
+        return json.decode(response.body);
+      } else {
+        Conexao().dialogSMS('Reservas', "Erro Reservas");
+      }
+    } catch (e) {
+      print('Erro Reservas $e');
+    }
+    return null;
+  }
+
   registerParceiro(Reserva reserva, String token) async {
     try {
       http.MultipartRequest request =
-          new http.MultipartRequest("POST", Uri.parse(root + 'reservaStore'));
+          http.MultipartRequest("POST", Uri.parse(root + 'reservaStore'));
 
       request.headers['Content-Type'] = 'application/json';
       request.headers['authorization'] = 'Bearer $token';

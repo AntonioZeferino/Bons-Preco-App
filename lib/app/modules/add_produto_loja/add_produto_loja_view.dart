@@ -1,4 +1,6 @@
 import 'package:bompreco/app/global/widgets/bt_normal.dart';
+import 'package:bompreco/app/global/widgets/list_produto_loja.dart';
+import 'package:bompreco/app/global/widgets/list_produto_minha_loja.dart';
 import 'package:bompreco/app/global/widgets/list_produto_sistema.dart';
 import 'package:bompreco/app/global/widgets/voltar_top.dart';
 import 'package:bompreco/app/modules/add_produto_loja/add_produto_loja_controller.dart';
@@ -34,7 +36,7 @@ class AddProdutoLojaView extends GetView<AddProdutoLojaController> {
                 child: Column(children: [
                   ButtonNormal(
                     color: Layout.primary(),
-                    text: 'Add Produto no Sistema',
+                    text: 'Add Produto no Sist.',
                     height: 45,
                     press: () {
                       Get.toNamed(Routes.REGISTRA_PRODUTO);
@@ -53,20 +55,49 @@ class AddProdutoLojaView extends GetView<AddProdutoLojaController> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        GestureDetector(
-                          onTap: () {},
-                          child: Container(
-                            height: Get.height / 18,
-                            // width: Get.width / 3,
-
-                            padding: const EdgeInsets.all(8),
-                            child: Center(
-                              child: Text(
-                                'Produtos do Sistema',
-                                style: TextStyle(
-                                  color: Layout.primaryWhite(),
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
+                        Obx(
+                          () => GestureDetector(
+                            onTap: () {
+                              controller.res.value = 0;
+                            },
+                            child: Container(
+                              height: Get.height / 18,
+                              width: Get.width / 3,
+                              color: controller.res.value == 0
+                                  ? Layout.primaryWhite()
+                                  : Layout.primary(),
+                              padding: const EdgeInsets.all(8),
+                              child: const Center(
+                                child: Text(
+                                  'Sistema',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Obx(
+                          () => GestureDetector(
+                            onTap: () {
+                              controller.res.value = 1;
+                            },
+                            child: Container(
+                              height: Get.height / 14,
+                              width: Get.width / 3,
+                              color: controller.res.value == 1
+                                  ? Layout.primaryWhite()
+                                  : Layout.primary(),
+                              padding: const EdgeInsets.all(8),
+                              child: const Center(
+                                child: Text(
+                                  'Loja',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                             ),
@@ -77,40 +108,89 @@ class AddProdutoLojaView extends GetView<AddProdutoLojaController> {
                   ),
                   //Lista
                   Obx(
-                    () => SizedBox(
-                      height: Get.height / 1.3,
-                      width: Get.width,
-                      child: controller.listProduto.isNotEmpty
-                          ? ListView.builder(
-                              scrollDirection: Axis.vertical,
-                              itemCount: controller.listProduto.length,
-                              itemBuilder: (context, index) {
-                                return ListProdutoSistLoja(
-                                  idParceiro: controller.parceiro.id!,
-                                  idProduto: controller.listProduto[index].id!,
-                                  produtImg:
-                                      "margherita-pizza-993274_960_720.jpg",
-                                  produtNome: controller.listProduto[index].nome
-                                      .toString(),
-                                );
-                              })
-                          : Center(
-                              child: Container(
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: SizedBox.expand(
-                                  child: TextButton(
-                                    child: CircularProgressIndicator(
-                                      color: Layout.primary(),
+                    () => controller.res.value == 0
+                        ? SizedBox(
+                            height: Get.height / 1.3,
+                            width: Get.width,
+                            child: controller.listProduto.isNotEmpty
+                                ? ListView.builder(
+                                    scrollDirection: Axis.vertical,
+                                    itemCount: controller.listProduto.length,
+                                    itemBuilder: (context, index) {
+                                      return ListProdutoSistLoja(
+                                        idParceiro: controller.parceiro.id!,
+                                        idProduto:
+                                            controller.listProduto[index].id!,
+                                        produtImg:
+                                            "margherita-pizza-993274_960_720.jpg",
+                                        produtNome: controller
+                                            .listProduto[index].nome
+                                            .toString(),
+                                      );
+                                    })
+                                : Center(
+                                    child: Container(
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: SizedBox.expand(
+                                        child: TextButton(
+                                          child: CircularProgressIndicator(
+                                            color: Layout.primary(),
+                                          ),
+                                          onPressed: () {},
+                                        ),
+                                      ),
                                     ),
-                                    onPressed: () {},
                                   ),
-                                ),
-                              ),
-                            ),
-                    ),
+                          )
+                        : SizedBox(
+                            height: Get.height / 1.3,
+                            width: Get.width,
+                            child: controller.listProdLoja.isNotEmpty
+                                ? ListView.builder(
+                                    scrollDirection: Axis.vertical,
+                                    itemCount: controller.listProdLoja.length,
+                                    itemBuilder: (context, index) {
+                                      return ListProdutoMinhaLoja(
+                                        userId: controller.user.id,
+                                        parceirId: controller
+                                            .listProdLoja[index].idParceiro,
+                                        produtId: controller
+                                            .listProdLoja[index].idProduto,
+                                        img:
+                                            "margherita-pizza-993274_960_720.jpg",
+                                        titulo: controller
+                                            .listProdLoja[index].prodNome
+                                            .toString(),
+                                        preco: controller
+                                            .listProdLoja[index].preco!
+                                            .toDouble(),
+                                        data: controller
+                                            .listProdLoja[index].dataValidad!,
+                                        stok: controller
+                                            .listProdLoja[index].estadoStok!
+                                            .toInt(),
+                                      );
+                                    })
+                                : Center(
+                                    child: Container(
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: SizedBox.expand(
+                                        child: TextButton(
+                                          child: CircularProgressIndicator(
+                                            color: Layout.primary(),
+                                          ),
+                                          onPressed: () {},
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                          ),
                   ),
                 ],
               )

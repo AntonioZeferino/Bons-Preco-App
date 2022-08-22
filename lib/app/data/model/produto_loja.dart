@@ -4,7 +4,7 @@ class produtoLoja {
   int? parceiroProdutId;
   String? parceiroNome;
   String? endereco;
-  double? preco;
+  int? preco;
   String? dataValidad;
   int? estadoStok;
 

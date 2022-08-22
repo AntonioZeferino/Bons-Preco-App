@@ -25,9 +25,9 @@ class ParceiProdutRepository {
     return list;
   }
 
-  lojaParceiProdutSelect(int parc, String token) async {
+  parceiDoProdutSelect(int parc, String token) async {
     List<LojaReserva> list = <LojaReserva>[];
-    var response = await api.getAllLojaParceiProdut(parc, token);
+    var response = await api.getAllParceiDoProdut(parc, token);
     response.forEach((e) {
       list.add(LojaReserva.fromJson(e));
     });

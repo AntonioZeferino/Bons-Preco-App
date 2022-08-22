@@ -2,7 +2,7 @@ class lojasLigadasProduto {
   int? produtoId;
   int? parceiroId;
   String? parceiroNome;
-  double? preco;
+  int? preco;
   String? dataValidad;
   int? estadoStok;
 

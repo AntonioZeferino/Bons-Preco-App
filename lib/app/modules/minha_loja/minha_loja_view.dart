@@ -1,5 +1,6 @@
 import 'package:bompreco/app/global/widgets/bt_normal.dart';
 import 'package:bompreco/app/global/widgets/list_produto_loja.dart';
+import 'package:bompreco/app/global/widgets/list_produto_loja_reserva.dart';
 import 'package:bompreco/app/global/widgets/voltar_top.dart';
 import 'package:bompreco/app/modules/minha_loja/minha_loja_controller.dart';
 import 'package:bompreco/app/routes/app_routes.dart';
@@ -330,49 +331,215 @@ class MinhaLojaView extends GetView<MinhaLojaController> {
                   ),
                   //Lista
                   Obx(
-                    () => SizedBox(
-                      height: Get.height / 1.3,
-                      width: Get.width,
-                      child: controller.listReserva.isNotEmpty
-                          ? ListView.builder(
-                              scrollDirection: Axis.vertical,
-                              itemCount: controller.listReserva.length,
-                              itemBuilder: (context, index) {
-                                return ListProdutoLoja(
-                                  userId: controller.user.id,
-                                  parceirId:
-                                      controller.listReserva[index].idParceiro,
-                                  produtId:
-                                      controller.listReserva[index].idProduto,
-                                  img: "margherita-pizza-993274_960_720.jpg",
-                                  titulo: controller.listReserva[index].prodNome
-                                      .toString(),
-                                  preco: controller.listReserva[index].preco!
-                                      .toDouble(),
-                                  data: controller
-                                      .listReserva[index].dataValidad!,
-                                  stok: controller
-                                      .listReserva[index].estadoStok!
-                                      .toInt(),
-                                );
-                              })
-                          : Center(
-                              child: Container(
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: SizedBox.expand(
-                                  child: TextButton(
-                                    child: CircularProgressIndicator(
-                                      color: Layout.primary(),
+                    () => controller.res == 0
+                        ? SizedBox(
+                            height: Get.height / 1.3,
+                            width: Get.width,
+                            child: controller.listReserva.isNotEmpty
+                                ? ListView.builder(
+                                    scrollDirection: Axis.vertical,
+                                    itemCount: controller.listReserva.length,
+                                    itemBuilder: (context, index) {
+                                      return ListProdutoLojaReserva(
+                                        idReserva: controller
+                                            .listReserva[index].idReservas,
+                                        userId: controller.user.id,
+                                        userNome: controller
+                                            .listReserva[index].userNome,
+                                        parceirId: controller
+                                            .listReserva[index].idParceiro,
+                                        produtId: controller
+                                            .listReserva[index].idProduto,
+                                        img:
+                                            "margherita-pizza-993274_960_720.jpg",
+                                        titulo: controller
+                                            .listReserva[index].prodNome
+                                            .toString(),
+                                        preco: controller
+                                            .listReserva[index].preco!
+                                            .toDouble(),
+                                        data: controller
+                                            .listReserva[index].dataValidad!,
+                                        stok: controller
+                                            .listReserva[index].estadoStok!
+                                            .toInt(),
+                                        estado: controller
+                                            .listReserva[index].estado!
+                                            .toInt(),
+                                      );
+                                    })
+                                : Center(
+                                    child: Text(
+                                      'Sem Reservas',
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          color: Layout.primary()),
                                     ),
-                                    onPressed: () {},
                                   ),
-                                ),
-                              ),
-                            ),
-                    ),
+                          )
+                        : controller.res == 1
+                            ? SizedBox(
+                                height: Get.height / 1.3,
+                                width: Get.width,
+                                child: controller.listAceites.isNotEmpty
+                                    ? ListView.builder(
+                                        scrollDirection: Axis.vertical,
+                                        itemCount:
+                                            controller.listAceites.length,
+                                        itemBuilder: (context, index) {
+                                          return ListProdutoLojaReserva(
+                                            idReserva: controller
+                                                .listReserva[index].idReservas,
+                                            userId: controller.user.id,
+                                            userNome: controller
+                                                .listReserva[index].userNome,
+                                            parceirId: controller
+                                                .listReserva[index].idParceiro,
+                                            produtId: controller
+                                                .listReserva[index].idProduto,
+                                            img:
+                                                "margherita-pizza-993274_960_720.jpg",
+                                            titulo: controller
+                                                .listReserva[index].prodNome
+                                                .toString(),
+                                            preco: controller
+                                                .listReserva[index].preco!
+                                                .toDouble(),
+                                            data: controller.listReserva[index]
+                                                .dataValidad!,
+                                            stok: controller
+                                                .listReserva[index].estadoStok!
+                                                .toInt(),
+                                            estado: controller
+                                                .listReserva[index].estado!
+                                                .toInt(),
+                                          );
+                                        })
+                                    : Center(
+                                        child: Text(
+                                          'Sem Reservas Aceites',
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold,
+                                              color: Layout.primary()),
+                                        ),
+                                      ),
+                              )
+                            : controller.res == 2
+                                ? SizedBox(
+                                    height: Get.height / 1.3,
+                                    width: Get.width,
+                                    child: controller.listProcessada.isNotEmpty
+                                        ? ListView.builder(
+                                            scrollDirection: Axis.vertical,
+                                            itemCount: controller
+                                                .listProcessada.length,
+                                            itemBuilder: (context, index) {
+                                              return ListProdutoLojaReserva(
+                                                idReserva: controller
+                                                    .listReserva[index]
+                                                    .idReservas,
+                                                userId: controller.user.id,
+                                                userNome: controller
+                                                    .listReserva[index]
+                                                    .userNome,
+                                                parceirId: controller
+                                                    .listReserva[index]
+                                                    .idParceiro,
+                                                produtId: controller
+                                                    .listReserva[index]
+                                                    .idProduto,
+                                                img:
+                                                    "margherita-pizza-993274_960_720.jpg",
+                                                titulo: controller
+                                                    .listReserva[index].prodNome
+                                                    .toString(),
+                                                preco: controller
+                                                    .listReserva[index].preco!
+                                                    .toDouble(),
+                                                data: controller
+                                                    .listReserva[index]
+                                                    .dataValidad!,
+                                                stok: controller
+                                                    .listReserva[index]
+                                                    .estadoStok!
+                                                    .toInt(),
+                                                estado: controller
+                                                    .listReserva[index].estado!
+                                                    .toInt(),
+                                              );
+                                            })
+                                        : Center(
+                                            child: Text(
+                                              'Sem Reservas Processadas',
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Layout.primary()),
+                                            ),
+                                          ),
+                                  )
+                                : controller.res == 3
+                                    ? SizedBox(
+                                        height: Get.height / 1.3,
+                                        width: Get.width,
+                                        child: controller
+                                                .listProcessada.isNotEmpty
+                                            ? ListView.builder(
+                                                scrollDirection: Axis.vertical,
+                                                itemCount: controller
+                                                    .listProcessada.length,
+                                                itemBuilder: (context, index) {
+                                                  return ListProdutoLojaReserva(
+                                                    idReserva: controller
+                                                        .listReserva[index]
+                                                        .idReservas,
+                                                    userId: controller.user.id,
+                                                    userNome: controller
+                                                        .listReserva[index]
+                                                        .userNome,
+                                                    parceirId: controller
+                                                        .listReserva[index]
+                                                        .idParceiro,
+                                                    produtId: controller
+                                                        .listReserva[index]
+                                                        .idProduto,
+                                                    img:
+                                                        "margherita-pizza-993274_960_720.jpg",
+                                                    titulo: controller
+                                                        .listReserva[index]
+                                                        .prodNome
+                                                        .toString(),
+                                                    preco: controller
+                                                        .listReserva[index]
+                                                        .preco!
+                                                        .toDouble(),
+                                                    data: controller
+                                                        .listReserva[index]
+                                                        .dataValidad!,
+                                                    stok: controller
+                                                        .listReserva[index]
+                                                        .estadoStok!
+                                                        .toInt(),
+                                                    estado: controller
+                                                        .listReserva[index]
+                                                        .estado!
+                                                        .toInt(),
+                                                  );
+                                                })
+                                            : Center(
+                                                child: Text(
+                                                  'Sem Reservas Terminados',
+                                                  style: TextStyle(
+                                                      fontSize: 18,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Layout.primary()),
+                                                ),
+                                              ),
+                                      )
+                                    : const Text('Nada!'),
                   ),
                 ],
               )

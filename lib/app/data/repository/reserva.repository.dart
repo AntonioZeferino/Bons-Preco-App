@@ -26,6 +26,16 @@ class ReservaRepository {
     return list;
   }
 
+  parceirReservaSelect(int parc, String token) async {
+    List<LojaReserva> list = <LojaReserva>[];
+    var response = await api.getAllParceitReserva(parc, token);
+    response.forEach((e) {
+      list.add(LojaReserva.fromJson(e));
+    });
+
+    return list;
+  }
+
   reservaInsert(Reserva reserva, String token) async {
     bool json = await api.registerParceiro(reserva, token);
     if (json) {

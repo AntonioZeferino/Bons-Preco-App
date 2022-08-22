@@ -53,7 +53,7 @@ class ParceiProdutProvider {
     return null;
   }
 
-  getAllLojaParceiProdut(int parc, String token) async {
+  getAllParceiDoProdut(int parc, String token) async {
     http.Response response;
     try {
       var headers = {
@@ -63,13 +63,13 @@ class ParceiProdutProvider {
 
       final body = {'idpar': parc};
 
-      response = await http.post(Uri.parse(root + "lojaReserva"),
+      response = await http.post(Uri.parse(root + "produtDoParceiro"),
           headers: headers, body: json.encode(body));
 
       if (200 == response.statusCode) {
         return json.decode(response.body);
       } else {
-        Conexao().dialogSMS('Reservas', "Erro Reservas");
+        Conexao().dialogSMS('Parceiro Produto', "Erro Parceiro Produto");
       }
     } catch (e) {
       print('Erro Reservas $e');

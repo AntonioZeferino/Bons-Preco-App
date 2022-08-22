@@ -148,45 +148,51 @@ class ListProdutoReserva extends StatelessWidget {
               ],
             ),
             //Icon Reservar
-            IconButton(
-              onPressed: () async {
-                bool res = false;
-                Reserva reserva = Reserva();
-                ReservaRepository repository = ReservaRepository();
+            estado == 0
+                ? IconButton(
+                    onPressed: () async {
+                      bool res = false;
+                      Reserva reserva = Reserva();
+                      ReservaRepository repository = ReservaRepository();
 
-                if (idReserva != 0) {
-                  reserva.id = idReserva;
-                  reserva.estado = estado + 1;
+                      if (idReserva != 0) {
+                        reserva.id = idReserva;
+                        reserva.estado = estado + 1;
 
-                  Conexao().verificaConexao();
-                  if (Conexao().net.value) {
-                    res = await repository.reservaUpdateEstado(
-                        reserva, token.value);
-                  } else {
-                    Get.snackbar(
-                      'Sem Internet',
-                      "verifica sua conexão com a internet!",
-                      snackPosition: SnackPosition.TOP,
-                      colorText: Layout.primaryWhite(),
-                      backgroundColor: Layout.danger(),
-                    );
-                  }
+                        Conexao().verificaConexao();
+                        if (Conexao().net.value) {
+                          res = await repository.reservaUpdateEstado(
+                              reserva, token.value);
+                        } else {
+                          Get.snackbar(
+                            'Sem Internet',
+                            "verifica sua conexão com a internet!",
+                            snackPosition: SnackPosition.TOP,
+                            colorText: Layout.primaryWhite(),
+                            backgroundColor: Layout.danger(),
+                          );
+                        }
 
-                  if (res) {
-                    Conexao().dialogSMS('Reserva', 'Actualizado com sucesso!');
-                  } else {
-                    print("Errado Res: " + res.toString());
-                  }
-                } else {
-                  Conexao().dialogSMS('Reserva', 'Preencha todos os campos!');
-                }
-              },
-              icon: const Icon(
-                Icons.double_arrow_rounded,
-              ),
-              color: Layout.primary(),
-              iconSize: 40,
-            )
+                        if (res) {
+                          Conexao()
+                              .dialogSMS('Reserva', 'Actualizado com sucesso!');
+                        } else {
+                          print("Errado Res: " + res.toString());
+                        }
+                      } else {
+                        Conexao()
+                            .dialogSMS('Reserva', 'Preencha todos os campos!');
+                      }
+                    },
+                    icon: const Icon(
+                      Icons.double_arrow_rounded,
+                    ),
+                    color: Layout.primary(),
+                    iconSize: 40,
+                  )
+                : Container(
+                    width: Get.width / 3.6,
+                  ),
           ],
         ),
       ),

@@ -157,19 +157,12 @@ class MinhasReservasView extends GetView<MinhasReservasController> {
                                       );
                                     })
                                 : Center(
-                                    child: Container(
-                                      height: 50,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: SizedBox.expand(
-                                        child: TextButton(
-                                          child: CircularProgressIndicator(
-                                            color: Layout.primary(),
-                                          ),
-                                          onPressed: () {},
-                                        ),
-                                      ),
+                                    child: Text(
+                                      'Sem Reservas',
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          color: Layout.primary()),
                                     ),
                                   ),
                           )
@@ -205,20 +198,12 @@ class MinhasReservasView extends GetView<MinhasReservasController> {
                                           );
                                         })
                                     : Center(
-                                        child: Container(
-                                          height: 50,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                          child: SizedBox.expand(
-                                            child: TextButton(
-                                              child: CircularProgressIndicator(
-                                                color: Layout.primary(),
-                                              ),
-                                              onPressed: () {},
-                                            ),
-                                          ),
+                                        child: Text(
+                                          'Sem Reservas',
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold,
+                                              color: Layout.primary()),
                                         ),
                                       ),
                               )
@@ -259,21 +244,12 @@ class MinhasReservasView extends GetView<MinhasReservasController> {
                                               );
                                             })
                                         : Center(
-                                            child: Container(
-                                              height: 50,
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                              ),
-                                              child: SizedBox.expand(
-                                                child: TextButton(
-                                                  child:
-                                                      CircularProgressIndicator(
-                                                    color: Layout.primary(),
-                                                  ),
-                                                  onPressed: () {},
-                                                ),
-                                              ),
+                                            child: Text(
+                                              'Sem Reservas',
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Layout.primary()),
                                             ),
                                           ),
                                   )

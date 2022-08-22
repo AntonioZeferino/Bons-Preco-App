@@ -6,6 +6,7 @@ import 'package:bompreco/app/data/model/produto.dart';
 import 'package:bompreco/app/data/model/user.dart';
 import 'package:bompreco/app/data/repository/parcei.produt.repository.dart';
 import 'package:bompreco/app/data/repository/produto.repository.dart';
+import 'package:bompreco/app/data/repository/reserva.repository.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -54,7 +55,7 @@ class AddProdutoLojaController extends GetxController {
   }
 
   pegarReserva(int id, String token) async {
-    var reserva = await repositoryReserva.lojaParceiProdutSelect(id, token);
+    var reserva = await repositoryReserva.parceiDoProdutSelect(id, token);
     listProdLoja.value = reserva != null ? await reserva : [];
   }
 

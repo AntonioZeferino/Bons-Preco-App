@@ -3,7 +3,7 @@ class produtoDaLoja {
   int? parceiroId;
   String? produtoNome;
   String? produtoImg;
-  double? preco;
+  int? preco;
   String? dataValidad;
   int? estadoStok;
 
