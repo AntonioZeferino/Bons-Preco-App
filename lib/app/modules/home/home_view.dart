@@ -16,7 +16,7 @@ class HomeView extends GetView<HomeController> {
       drawer: NavigationDrawerWidget(),
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Container(
+        child: SizedBox(
           height: Get.height,
           width: Get.width,
           child: ListView(children: [
@@ -115,7 +115,8 @@ class HomeView extends GetView<HomeController> {
                             itemBuilder: (context, index) {
                               return ListProdutosRecentes(
                                 id: controller.listProduto[index].id,
-                                img: "margherita-pizza-993274_960_720.jpg",
+                                img: controller.listProdutoRecentes[index].img
+                                    .toString(),
                                 titulo: controller
                                     .listProdutoRecentes[index].nome
                                     .toString(),
@@ -170,7 +171,8 @@ class HomeView extends GetView<HomeController> {
                             itemBuilder: (context, index) {
                               return ListProdutosTop(
                                 id: controller.listProduto[index].id,
-                                img: "pop_corn.jpg",
+                                img: controller.listProduto[index].img
+                                    .toString(),
                                 titulo: controller.listProdutoTop[index].nome
                                     .toString(),
                                 nLojas: controller.listProdutoTop[index].total

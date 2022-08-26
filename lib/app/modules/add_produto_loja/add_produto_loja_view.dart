@@ -121,8 +121,9 @@ class AddProdutoLojaView extends GetView<AddProdutoLojaController> {
                                         idParceiro: controller.parceiro.id!,
                                         idProduto:
                                             controller.listProduto[index].id!,
-                                        produtImg:
-                                            "margherita-pizza-993274_960_720.jpg",
+                                        produtImg: controller
+                                            .listProduto[index].img
+                                            .toString(),
                                         produtNome: controller
                                             .listProduto[index].nome
                                             .toString(),
@@ -159,8 +160,9 @@ class AddProdutoLojaView extends GetView<AddProdutoLojaController> {
                                             .listProdLoja[index].idParceiro,
                                         produtId: controller
                                             .listProdLoja[index].idProduto,
-                                        img:
-                                            "margherita-pizza-993274_960_720.jpg",
+                                        img: controller
+                                            .listProdLoja[index].prodImg
+                                            .toString(),
                                         titulo: controller
                                             .listProdLoja[index].prodNome
                                             .toString(),

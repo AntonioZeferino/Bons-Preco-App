@@ -1,3 +1,4 @@
+import 'package:bompreco/app/data/conexao.dart';
 import 'package:bompreco/app/data/model/parceiro.dart';
 import 'package:bompreco/app/data/model/produto_da_loja.dart';
 import 'package:bompreco/app/data/model/user.dart';
@@ -15,6 +16,7 @@ class DetalhesLojaController extends GetxController {
 
   final repository = ProdutoRepository();
   RxList<produtoDaLoja> listProduto = <produtoDaLoja>[].obs;
+  final String rootParceiro = Conexao().getImgParceiro();
   RxString token = ''.obs;
 
   @override

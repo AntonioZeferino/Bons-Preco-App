@@ -2,6 +2,7 @@ import 'package:bompreco/app/global/widgets/list_loja_preco.dart';
 import 'package:bompreco/app/global/widgets/voltar_top.dart';
 import 'package:bompreco/app/modules/produto_loja/produto_loja_controller.dart';
 import 'package:bompreco/app/theme/layout.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -25,14 +26,43 @@ class ProdutoLojaView extends GetView<ProdutoLojaController> {
               children: [
                 const VoltarTop(titulo: "Bons Preços"),
                 //Img
-                Container(
+                SizedBox(
                   //color: Layout.danger(),
                   height: Get.height / 2.2,
                   width: Get.width,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/${controller.img}'),
-                      fit: BoxFit.fill,
+                  child: CachedNetworkImage(
+                    imageUrl:
+                        controller.rootProduto + controller.img.toString(),
+                    fit: BoxFit.cover,
+                    imageBuilder: (BuildContext context, imageProvider) =>
+                        Container(
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.only(
+                          topRight: Radius.circular(6),
+                          topLeft: Radius.circular(6),
+                        ),
+                        image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    placeholder: (BuildContext context, url) => Container(
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(6),
+                          topLeft: Radius.circular(6),
+                        ),
+                        image: DecorationImage(
+                          image: AssetImage('assets/icone.png'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          color: Layout.primaryWhite(),
+                        ),
+                      ),
                     ),
                   ),
                 ),

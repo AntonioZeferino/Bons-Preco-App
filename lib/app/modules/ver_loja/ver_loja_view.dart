@@ -17,7 +17,7 @@ class VerLojaView extends GetView<VerLojaController> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Container(
+        child: SizedBox(
           height: Get.height,
           width: Get.width,
           child: ListView(children: [
@@ -56,7 +56,8 @@ class VerLojaView extends GetView<VerLojaController> {
                             itemCount: controller.listParceiro.length,
                             itemBuilder: (context, index) {
                               return ListLoja(
-                                img: "cinnamon-roll-4719023_960_720.jpg",
+                                img: controller.listParceiro[index].img
+                                    .toString(),
                                 titulo: controller.listParceiro[index].nome
                                     .toString(),
                                 endereco: controller

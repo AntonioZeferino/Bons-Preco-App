@@ -1,3 +1,4 @@
+import 'package:bompreco/app/data/conexao.dart';
 import 'package:bompreco/app/data/model/produto_da_loja.dart';
 import 'package:bompreco/app/data/model/produto_loja.dart';
 import 'package:bompreco/app/data/model/user.dart';
@@ -7,6 +8,7 @@ import 'package:get_storage/get_storage.dart';
 
 class ProdutoLojaController extends GetxController {
   final box = GetStorage('BonsPreco');
+  final String rootProduto = Conexao().getImgProduto();
   String img = "";
   String titulo = "";
   String nLojas = "";

@@ -5,6 +5,7 @@ import 'package:bompreco/app/global/widgets/voltar_top.dart';
 import 'package:bompreco/app/modules/minha_loja/minha_loja_controller.dart';
 import 'package:bompreco/app/routes/app_routes.dart';
 import 'package:bompreco/app/theme/layout.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -74,12 +75,44 @@ class MinhaLojaView extends GetView<MinhaLojaController> {
                           height: Get.height / 6,
                           width: Get.width / 3.5,
                           decoration: BoxDecoration(
-                            image: const DecorationImage(
-                              image: AssetImage(
-                                  'assets/christmas-cookies-1886760_960_720.webp'),
-                              fit: BoxFit.fill,
-                            ),
                             borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: CachedNetworkImage(
+                            imageUrl: controller.rootParceiro +
+                                controller.parceiro.img.toString(),
+                            fit: BoxFit.cover,
+                            imageBuilder:
+                                (BuildContext context, imageProvider) =>
+                                    Container(
+                              decoration: BoxDecoration(
+                                borderRadius: const BorderRadius.only(
+                                  topRight: Radius.circular(6),
+                                  topLeft: Radius.circular(6),
+                                ),
+                                image: DecorationImage(
+                                  image: imageProvider,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            placeholder: (BuildContext context, url) =>
+                                Container(
+                              decoration: const BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(6),
+                                  topLeft: Radius.circular(6),
+                                ),
+                                image: DecorationImage(
+                                  image: AssetImage('assets/icone.png'),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              child: Center(
+                                child: CircularProgressIndicator(
+                                  color: Layout.primaryWhite(),
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                         Column(
@@ -350,8 +383,9 @@ class MinhaLojaView extends GetView<MinhaLojaController> {
                                             .listReserva[index].idParceiro,
                                         produtId: controller
                                             .listReserva[index].idProduto,
-                                        img:
-                                            "margherita-pizza-993274_960_720.jpg",
+                                        img: controller
+                                            .listReserva[index].prodImg
+                                            .toString(),
                                         titulo: controller
                                             .listReserva[index].prodNome
                                             .toString(),
@@ -390,29 +424,30 @@ class MinhaLojaView extends GetView<MinhaLojaController> {
                                         itemBuilder: (context, index) {
                                           return ListProdutoLojaReserva(
                                             idReserva: controller
-                                                .listReserva[index].idReservas,
+                                                .listAceites[index].idReservas,
                                             userId: controller.user.id,
                                             userNome: controller
-                                                .listReserva[index].userNome,
+                                                .listAceites[index].userNome,
                                             parceirId: controller
-                                                .listReserva[index].idParceiro,
+                                                .listAceites[index].idParceiro,
                                             produtId: controller
-                                                .listReserva[index].idProduto,
-                                            img:
-                                                "margherita-pizza-993274_960_720.jpg",
+                                                .listAceites[index].idProduto,
+                                            img: controller
+                                                .listAceites[index].prodImg
+                                                .toString(),
                                             titulo: controller
-                                                .listReserva[index].prodNome
+                                                .listAceites[index].prodNome
                                                 .toString(),
                                             preco: controller
-                                                .listReserva[index].preco!
+                                                .listAceites[index].preco!
                                                 .toDouble(),
-                                            data: controller.listReserva[index]
+                                            data: controller.listAceites[index]
                                                 .dataValidad!,
                                             stok: controller
-                                                .listReserva[index].estadoStok!
+                                                .listAceites[index].estadoStok!
                                                 .toInt(),
                                             estado: controller
-                                                .listReserva[index].estado!
+                                                .listAceites[index].estado!
                                                 .toInt(),
                                           );
                                         })
@@ -438,35 +473,40 @@ class MinhaLojaView extends GetView<MinhaLojaController> {
                                             itemBuilder: (context, index) {
                                               return ListProdutoLojaReserva(
                                                 idReserva: controller
-                                                    .listReserva[index]
+                                                    .listProcessada[index]
                                                     .idReservas,
                                                 userId: controller.user.id,
                                                 userNome: controller
-                                                    .listReserva[index]
+                                                    .listProcessada[index]
                                                     .userNome,
                                                 parceirId: controller
-                                                    .listReserva[index]
+                                                    .listProcessada[index]
                                                     .idParceiro,
                                                 produtId: controller
-                                                    .listReserva[index]
+                                                    .listProcessada[index]
                                                     .idProduto,
-                                                img:
-                                                    "margherita-pizza-993274_960_720.jpg",
+                                                img: controller
+                                                    .listProcessada[index]
+                                                    .prodImg
+                                                    .toString(),
                                                 titulo: controller
-                                                    .listReserva[index].prodNome
+                                                    .listProcessada[index]
+                                                    .prodNome
                                                     .toString(),
                                                 preco: controller
-                                                    .listReserva[index].preco!
+                                                    .listProcessada[index]
+                                                    .preco!
                                                     .toDouble(),
                                                 data: controller
-                                                    .listReserva[index]
+                                                    .listProcessada[index]
                                                     .dataValidad!,
                                                 stok: controller
-                                                    .listReserva[index]
+                                                    .listProcessada[index]
                                                     .estadoStok!
                                                     .toInt(),
                                                 estado: controller
-                                                    .listReserva[index].estado!
+                                                    .listProcessada[index]
+                                                    .estado!
                                                     .toInt(),
                                               );
                                             })
@@ -485,45 +525,47 @@ class MinhaLojaView extends GetView<MinhaLojaController> {
                                         height: Get.height / 1.3,
                                         width: Get.width,
                                         child: controller
-                                                .listProcessada.isNotEmpty
+                                                .listTerminados.isNotEmpty
                                             ? ListView.builder(
                                                 scrollDirection: Axis.vertical,
                                                 itemCount: controller
-                                                    .listProcessada.length,
+                                                    .listTerminados.length,
                                                 itemBuilder: (context, index) {
                                                   return ListProdutoLojaReserva(
                                                     idReserva: controller
-                                                        .listReserva[index]
+                                                        .listTerminados[index]
                                                         .idReservas,
                                                     userId: controller.user.id,
                                                     userNome: controller
-                                                        .listReserva[index]
+                                                        .listTerminados[index]
                                                         .userNome,
                                                     parceirId: controller
-                                                        .listReserva[index]
+                                                        .listTerminados[index]
                                                         .idParceiro,
                                                     produtId: controller
-                                                        .listReserva[index]
+                                                        .listTerminados[index]
                                                         .idProduto,
-                                                    img:
-                                                        "margherita-pizza-993274_960_720.jpg",
+                                                    img: controller
+                                                        .listTerminados[index]
+                                                        .prodImg
+                                                        .toString(),
                                                     titulo: controller
-                                                        .listReserva[index]
+                                                        .listTerminados[index]
                                                         .prodNome
                                                         .toString(),
                                                     preco: controller
-                                                        .listReserva[index]
+                                                        .listTerminados[index]
                                                         .preco!
                                                         .toDouble(),
                                                     data: controller
-                                                        .listReserva[index]
+                                                        .listTerminados[index]
                                                         .dataValidad!,
                                                     stok: controller
-                                                        .listReserva[index]
+                                                        .listTerminados[index]
                                                         .estadoStok!
                                                         .toInt(),
                                                     estado: controller
-                                                        .listReserva[index]
+                                                        .listTerminados[index]
                                                         .estado!
                                                         .toInt(),
                                                   );

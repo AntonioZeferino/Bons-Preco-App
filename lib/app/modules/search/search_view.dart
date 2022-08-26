@@ -93,26 +93,20 @@ class SearchView extends GetView<SearchController> {
                             itemBuilder: (context, index) {
                               return ListProdutosTop(
                                 id: controller.listProduto[index].id,
-                                img: "cinnamon-roll-4719023_960_720.jpg",
+                                img: controller.listProduto[index].img
+                                    .toString(),
                                 titulo: controller.listProduto[index].nome
                                     .toString(),
                                 nLojas: controller.listProduto[index].total
                                     .toString(),
                               );
                             })
-                        : Center(
-                            child: Container(
-                              height: 50,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: SizedBox.expand(
-                                child: TextButton(
-                                  child: CircularProgressIndicator(
-                                    color: Layout.primary(),
-                                  ),
-                                  onPressed: () {},
-                                ),
+                        : const Center(
+                            child: Text(
+                              "Sem Resultados!",
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),

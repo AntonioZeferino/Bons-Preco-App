@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bompreco/app/data/conexao.dart';
 import 'package:bompreco/app/data/model/loja.reserva.dart';
 import 'package:bompreco/app/data/model/parceiro.dart';
 import 'package:bompreco/app/data/model/user.dart';
@@ -13,6 +14,7 @@ class MinhaLojaController extends GetxController {
 
   Parceiro parceiro = Parceiro();
   //RxList<Parceiro> listParceiro = <Parceiro>[].obs;
+  final String rootParceiro = Conexao().getImgParceiro();
 
   final repository = ReservaRepository();
   RxList<LojaReserva> listLoja = <LojaReserva>[].obs;
@@ -48,7 +50,7 @@ class MinhaLojaController extends GetxController {
 
   pegarReserva(int id, String token) async {
     var reserva = await repository.parceirReservaSelect(id, token);
-    listReserva.value = reserva != null ? await reserva : [];
+    listLoja.value = reserva != null ? await reserva : [];
   }
 
   startSplashScreenTimer() async {
@@ -57,7 +59,6 @@ class MinhaLojaController extends GetxController {
   }
 
   verificarReserva() {
-    int cont = 0;
     for (var i = 0; i < listLoja.length; i++) {
       if (listLoja[i].estado == 1) {
         listReserva.add(listLoja[i]);

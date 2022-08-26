@@ -3,6 +3,7 @@ import 'package:bompreco/app/data/model/reserva.dart';
 import 'package:bompreco/app/data/model/user_reserva.dart';
 import 'package:bompreco/app/data/repository/reserva.repository.dart';
 import 'package:bompreco/app/theme/layout.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -32,6 +33,7 @@ class ListProdutoReserva extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final box = GetStorage('BonsPreco');
+    final String rootProduto = Conexao().getImgProduto();
     RxString token = ''.obs;
     token.value = box.read('accessToken');
     return GestureDetector(
@@ -73,9 +75,39 @@ class ListProdutoReserva extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Layout.primary(),
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
-                image: DecorationImage(
-                  image: AssetImage('assets/$produtImg'),
-                  fit: BoxFit.fill,
+              ),
+              child: CachedNetworkImage(
+                imageUrl: rootProduto + produtImg.toString(),
+                fit: BoxFit.cover,
+                imageBuilder: (BuildContext context, imageProvider) =>
+                    Container(
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.only(
+                      topRight: Radius.circular(6),
+                      topLeft: Radius.circular(6),
+                    ),
+                    image: DecorationImage(
+                      image: imageProvider,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                placeholder: (BuildContext context, url) => Container(
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(6),
+                      topLeft: Radius.circular(6),
+                    ),
+                    image: DecorationImage(
+                      image: AssetImage('assets/icone.png'),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  child: Center(
+                    child: CircularProgressIndicator(
+                      color: Layout.primaryWhite(),
+                    ),
+                  ),
                 ),
               ),
             ),

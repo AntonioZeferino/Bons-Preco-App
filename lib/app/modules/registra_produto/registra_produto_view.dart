@@ -133,7 +133,9 @@ class RegistraProdutoView extends GetView<RegistraProdutoController> {
                       child: ButtonNormal(
                         text: 'Criar',
                         height: 50,
-                        press: () {},
+                        press: () {
+                          controller.setPedido();
+                        },
                       ),
                     ),
                   ),

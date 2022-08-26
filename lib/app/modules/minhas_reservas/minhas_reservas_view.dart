@@ -146,8 +146,9 @@ class MinhasReservasView extends GetView<MinhasReservasController> {
                                             .listSelecionado[index].idUser!,
                                         estado: controller
                                             .listSelecionado[index].estado!,
-                                        produtImg:
-                                            "margherita-pizza-993274_960_720.jpg",
+                                        produtImg: controller
+                                            .listSelecionado[index].produtImg
+                                            .toString(),
                                         produtNome: controller
                                             .listSelecionado[index].produtNome
                                             .toString(),
@@ -187,8 +188,9 @@ class MinhasReservasView extends GetView<MinhasReservasController> {
                                                 .listEnviado[index].idUser!,
                                             estado: controller
                                                 .listEnviado[index].estado!,
-                                            produtImg:
-                                                "margherita-pizza-993274_960_720.jpg",
+                                            produtImg: controller
+                                                .listEnviado[index].produtImg
+                                                .toString(),
                                             produtNome: controller
                                                 .listEnviado[index].produtNome
                                                 .toString(),
@@ -231,8 +233,9 @@ class MinhasReservasView extends GetView<MinhasReservasController> {
                                                     .listAceite[index].idUser!,
                                                 estado: controller
                                                     .listAceite[index].estado!,
-                                                produtImg:
-                                                    "margherita-pizza-993274_960_720.jpg",
+                                                produtImg: controller
+                                                    .listAceite[index].produtImg
+                                                    .toString(),
                                                 produtNome: controller
                                                     .listAceite[index]
                                                     .produtNome

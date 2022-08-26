@@ -1,7 +1,9 @@
+import 'package:bompreco/app/data/conexao.dart';
 import 'package:bompreco/app/global/widgets/list_produto_loja.dart';
 import 'package:bompreco/app/global/widgets/voltar_top.dart';
 import 'package:bompreco/app/modules/detalhes_loja/detalhes_loja_controller.dart';
 import 'package:bompreco/app/theme/layout.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -30,18 +32,50 @@ class DetalhesLojaView extends GetView<DetalhesLojaController> {
                       children: [
                         //Img
                         Container(
-                          //color: Layout.danger(),
                           height: Get.height / 6,
                           width: Get.width / 3.5,
                           decoration: BoxDecoration(
-                            image: const DecorationImage(
-                              image: AssetImage(
-                                  'assets/christmas-cookies-1886760_960_720.webp'),
-                              fit: BoxFit.fill,
-                            ),
                             borderRadius: BorderRadius.circular(10),
                           ),
+                          child: CachedNetworkImage(
+                            imageUrl: controller.rootParceiro +
+                                controller.parceiro.img.toString(),
+                            fit: BoxFit.cover,
+                            imageBuilder:
+                                (BuildContext context, imageProvider) =>
+                                    Container(
+                              decoration: BoxDecoration(
+                                borderRadius: const BorderRadius.only(
+                                  topRight: Radius.circular(6),
+                                  topLeft: Radius.circular(6),
+                                ),
+                                image: DecorationImage(
+                                  image: imageProvider,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            placeholder: (BuildContext context, url) =>
+                                Container(
+                              decoration: const BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(6),
+                                  topLeft: Radius.circular(6),
+                                ),
+                                image: DecorationImage(
+                                  image: AssetImage('assets/icone.png'),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              child: Center(
+                                child: CircularProgressIndicator(
+                                  color: Layout.primaryWhite(),
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
+
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -187,6 +221,7 @@ class DetalhesLojaView extends GetView<DetalhesLojaController> {
                       ),
                     ],
                   ),
+
                   //Lista
                   Obx(
                     () => SizedBox(
@@ -203,7 +238,8 @@ class DetalhesLojaView extends GetView<DetalhesLojaController> {
                                       controller.listProduto[index].produtoId,
                                   parceirId:
                                       controller.listProduto[index].parceiroId,
-                                  img: "margherita-pizza-993274_960_720.jpg",
+                                  img: controller.listProduto[index].produtoImg
+                                      .toString(),
                                   titulo: controller
                                       .listProduto[index].produtoNome
                                       .toString(),
