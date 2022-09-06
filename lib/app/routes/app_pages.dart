@@ -1,5 +1,7 @@
 import 'package:bompreco/app/modules/add_produto_loja/add_produto_loja_binding.dart';
 import 'package:bompreco/app/modules/add_produto_loja/add_produto_loja_view.dart';
+import 'package:bompreco/app/modules/admin/admin_binding.dart';
+import 'package:bompreco/app/modules/admin/admin_view.dart';
 import 'package:bompreco/app/modules/bemvindo/bemvindo_binding.dart';
 import 'package:bompreco/app/modules/bemvindo/bemvindo_view.dart';
 import 'package:bompreco/app/modules/criar_conta/criar_conta_binding.dart';
@@ -93,6 +95,11 @@ class AppPages {
       name: Routes.MINHAS_RESERVAS,
       page: () => const MinhasReservasView(),
       binding: MinhasReservasBinding(),
+    ),
+    GetPage(
+      name: Routes.ADMIN,
+      page: () => const AdminView(),
+      binding: AdminBinding(),
     ),
   ];
 }

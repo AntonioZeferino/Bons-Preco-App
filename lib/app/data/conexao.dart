@@ -18,7 +18,7 @@ class Conexao {
 
   get() {
     //return url = 'http://192.168.43.87:8000/';
-    return url = 'http://192.168.0.114:8000/';
+    return url = 'http://192.168.0.108:8000/';
     //return url = 'http://bginovation.com/kesongo/public/';
   }
 

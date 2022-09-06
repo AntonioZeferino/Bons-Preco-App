@@ -100,9 +100,14 @@ class NavigationDrawerWidget extends StatelessWidget {
                   listParceiro.value = await parceiroRepository
                       .parceiroSelectUser(user.id.toString(), token.value);
 
-                  if (listParceiro[0].donoIdUser == user.id!) {
-                    box.write('Parceiro', listParceiro[0]);
-                    Get.toNamed(Routes.MINHA_LOJA);
+                  if (listParceiro.isNotEmpty) {
+                    if (listParceiro[0].donoIdUser == user.id!) {
+                      box.write('Parceiro', listParceiro[0]);
+                      Get.toNamed(Routes.MINHA_LOJA);
+                    } else {
+                      Conexao()
+                          .dialogSMS('Aviso!', "Não tens uma Loja criada!");
+                    }
                   } else {
                     Conexao().dialogSMS('Aviso!', "Não tens uma Loja criada!");
                   }
@@ -117,6 +122,15 @@ class NavigationDrawerWidget extends StatelessWidget {
               icon: Icons.add_business,
               onClicked: () {
                 Get.toNamed(Routes.VER_LOJA);
+              },
+            ),
+            buildMenuItem(
+              text: 'Gestor',
+              icon: Icons.admin_panel_settings,
+              onClicked: () {
+                if (int.parse(user.gestor.toString()) == 1) {
+                  Get.toNamed(Routes.ADMIN);
+                }
               },
             ),
             buildMenuItem(

@@ -134,7 +134,7 @@ class RegistraProdutoView extends GetView<RegistraProdutoController> {
                         text: 'Criar',
                         height: 50,
                         press: () {
-                          controller.setPedido();
+                          controller.setProduto();
                         },
                       ),
                     ),

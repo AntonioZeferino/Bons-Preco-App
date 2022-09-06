@@ -31,7 +31,11 @@ class MinhaLojaView extends GetView<MinhaLojaController> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      controller.box
+                          .write("ParceirActulizLoja", controller.parceiro);
+                      Get.toNamed(Routes.CRIAR_LOJA);
+                    },
                     child: Container(
                       padding: const EdgeInsets.all(2),
                       margin: EdgeInsets.only(

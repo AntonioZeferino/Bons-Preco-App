@@ -39,6 +39,10 @@ class CriarLojaController extends GetxController {
     //pegarUser();
     user = User.fromJson(box.read('user'));
     token.value = box.read('accessToken');
+    parceiro = box.read('ParceirActulizLoja');
+    if (parceiro.id != null) {
+      editarParceir(parceiro);
+    }
     super.onInit();
   }
 
@@ -51,7 +55,6 @@ class CriarLojaController extends GetxController {
           horarioCtrl.text.toString().isNotEmpty &&
           enderecoCtrl.text.toString().isNotEmpty) {
         loading.value = true;
-        parceiro.id = idParceiroActualiz.value;
         parceiro.donoIdUser = user.id;
         parceiro.nome = nomeCtrl.text.toString();
         parceiro.contacto = contactoCtrl.text.toString();
@@ -74,7 +77,7 @@ class CriarLojaController extends GetxController {
         }
 
         if (res) {
-          Conexao().dialogSMS('Produto', 'Enviado com sucesso!');
+          Conexao().dialogSMS('Parceiro', 'Parceiro criado com sucesso!');
           loading.value = false;
           limparCampos();
         } else {
@@ -83,11 +86,11 @@ class CriarLojaController extends GetxController {
         }
       } else {
         loading.value = false;
-        Conexao().dialogSMS('Produto', 'Preencha todos os campos!');
+        Conexao().dialogSMS('Parceiro', 'Preencha todos os campos!');
       }
     } else {
       loading.value = false;
-      Conexao().dialogSMS('Produto', 'Porfavor selecione a Imagem!');
+      Conexao().dialogSMS('Parceiro', 'Porfavor selecione a Imagem!');
     }
   }
 
@@ -184,6 +187,20 @@ class CriarLojaController extends GetxController {
       isPicked1.value = true;
       verImg1.value = 0;
     }
+  }
+
+  editarParceir(Parceiro parceiro) {
+    idParceiroActualiz.value = parceiro.id!;
+    nomeCtrl.text = parceiro.nome.toString();
+    contactoCtrl.text = parceiro.contacto.toString();
+    emailCtrl.text = parceiro.email.toString();
+    horarioCtrl.text = parceiro.horario.toString();
+    entregasCtrl.text = parceiro.entregas.toString();
+    enderecoCtrl.text = parceiro.endereco.toString();
+    valor.value = parceiro.entregas!.toInt() == 1 ? true : false;
+    image1 = XFile('').obs;
+    verImg1 = 1.obs;
+    isPicked1.value = false;
   }
 
   limparCampos() {

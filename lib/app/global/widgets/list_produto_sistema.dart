@@ -8,6 +8,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:intl/intl.dart';
 
 class ListProdutoSistLoja extends StatelessWidget {
   const ListProdutoSistLoja({
@@ -27,6 +28,7 @@ class ListProdutoSistLoja extends StatelessWidget {
   Widget build(BuildContext context) {
     final box = GetStorage('BonsPreco');
     final String rootProduto = Conexao().getImgProduto();
+    DateFormat formatData = DateFormat("yyyy-MM-dd");
     AddProdutoLojaController controller = AddProdutoLojaController();
     final repository = ParceiProdutRepository();
     ParceiProdut parceiProdut = ParceiProdut();
@@ -45,8 +47,7 @@ class ListProdutoSistLoja extends StatelessWidget {
             color: Layout.dark(),
             fontWeight: FontWeight.bold,
           ),
-          content: Container(
-              //padding: EdgeInsets.all(Get.width / 32),
+          content: SizedBox(
               child: Column(
             children: [
               Center(
@@ -72,7 +73,7 @@ class ListProdutoSistLoja extends StatelessWidget {
               //Data
               Obx(
                 () => InputNormal(
-                  hintText: 'Data',
+                  hintText: '2022-01-31',
                   icons: Icons.date_range_rounded,
                   controller: dataCtrl,
                   enabled: !loading.value,
@@ -112,12 +113,14 @@ class ListProdutoSistLoja extends StatelessWidget {
           )),
           textConfirm: 'Guardar',
           confirmTextColor: Layout.primaryWhite(),
+          buttonColor: Layout.primary(),
           onConfirm: () async {
             if (precoCtrl.text != '' && dataCtrl.text != '' && valor.value) {
               parceiProdut.idParceiro = idParceiro;
               parceiProdut.idProduto = idProduto;
               parceiProdut.preco = int.parse(precoCtrl.text);
-              parceiProdut.dataValidad = dataCtrl.text;
+              parceiProdut.dataValidad =
+                  formatData.format(DateTime.parse(dataCtrl.text));
               parceiProdut.estadoStok = valor.value ? 1 : 0;
               var res = await repository.parceiProdutInsert(
                   parceiProdut, token.value);
@@ -170,7 +173,7 @@ class ListProdutoSistLoja extends StatelessWidget {
                 left: Get.width / 30,
               ),
               decoration: BoxDecoration(
-                color: Layout.primary(),
+                color: Layout.primaryWhite(),
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
               ),
               child: CachedNetworkImage(

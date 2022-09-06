@@ -1,39 +1,45 @@
-import 'dart:convert';
-
 import 'package:bompreco/app/data/conexao.dart';
-import 'package:bompreco/app/data/model/parceiro.dart';
-import 'package:bompreco/app/routes/app_routes.dart';
+import 'package:bompreco/app/data/model/parcei_produt.dart';
+import 'package:bompreco/app/data/repository/parcei.produt.repository.dart';
+import 'package:bompreco/app/global/widgets/input_normal.dart';
+import 'package:bompreco/app/modules/add_produto_loja/add_produto_loja_controller.dart';
 import 'package:bompreco/app/theme/layout.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:intl/intl.dart';
 
-class ListLoja extends StatelessWidget {
-  const ListLoja({
+class ListProdutoGestor extends StatelessWidget {
+  const ListProdutoGestor({
     Key? key,
-    required this.img,
-    required this.titulo,
-    required this.endereco,
-    required this.parceiro,
+    required this.idProduto,
+    required this.produtImg,
+    required this.produtNome,
   }) : super(key: key);
 
-  final String img;
-  final String titulo;
-  final String endereco;
-  final Parceiro parceiro;
+  final int idProduto;
+  final String produtImg;
+  final String produtNome;
+
   @override
   Widget build(BuildContext context) {
     final box = GetStorage('BonsPreco');
-    final String rootParceiro = Conexao().getImgParceiro();
-
+    final String rootProduto = Conexao().getImgProduto();
+    DateFormat formatData = DateFormat("yyyy-MM-dd");
+    AddProdutoLojaController controller = AddProdutoLojaController();
+    final repository = ParceiProdutRepository();
+    ParceiProdut parceiProdut = ParceiProdut();
+    TextEditingController precoCtrl = TextEditingController();
+    TextEditingController dataCtrl = TextEditingController();
+    RxBool valor = false.obs;
+    RxBool loading = false.obs;
+    RxString token = ''.obs;
+    token.value = box.read('accessToken');
     return GestureDetector(
-      onTap: () {
-        box.write("Parceiro", parceiro);
-        Get.toNamed(Routes.DETALHES_LOJA);
-      },
+      onTap: () {},
       child: Container(
-        height: Get.height / 5.4,
+        height: Get.height / 6,
         width: Get.width / 1.5,
         margin: EdgeInsets.only(
           left: Get.width / 55,
@@ -58,17 +64,18 @@ class ListLoja extends StatelessWidget {
           children: [
             //IMG
             Container(
-              height: Get.height / 6.5,
-              width: Get.width / 3.8,
+              height: Get.height / 8,
+              width: Get.width / 4,
               margin: EdgeInsets.only(
-                left: Get.width / 40,
+                //bottom: Get.height / 80,
+                left: Get.width / 30,
               ),
               decoration: BoxDecoration(
                 color: Layout.primaryWhite(),
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
               ),
               child: CachedNetworkImage(
-                imageUrl: rootParceiro + img,
+                imageUrl: rootProduto + produtImg,
                 fit: BoxFit.cover,
                 imageBuilder: (BuildContext context, imageProvider) =>
                     Container(
@@ -102,48 +109,21 @@ class ListLoja extends StatelessWidget {
                 ),
               ),
             ),
-            //Titulo, Endereco, Vencimento, Stok
+            //Preco, Titulo, Endereco
             Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 //Titulo
                 Container(
                   margin: EdgeInsets.only(
+                    top: Get.height / 15,
                     left: Get.width / 55,
-                    top: Get.height / 18,
-                    bottom: 5,
                   ),
                   child: Text(
-                    titulo,
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                //Endereco loja
-                Container(
-                  height: Get.height / 28,
-                  width: Get.width / 1.9,
-                  margin: EdgeInsets.only(
-                    top: 2,
-                    left: Get.width / 55,
-                  ),
-                  padding: const EdgeInsets.all(3),
-                  decoration: BoxDecoration(
-                    //color: Layout.primary(),
-                    border: Border.all(
+                    produtNome,
+                    style: TextStyle(
                       color: Layout.primary(),
-                      width: 2,
-                    ),
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(8),
-                    ),
-                  ),
-                  child: Text(
-                    endereco,
-                    style: const TextStyle(
-                      fontSize: 14,
+                      fontSize: 17,
                       fontWeight: FontWeight.w700,
                     ),
                   ),

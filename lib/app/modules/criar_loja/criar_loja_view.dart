@@ -193,18 +193,31 @@ class CriarLojaView extends GetView<CriarLojaController> {
                   const SizedBox(
                     height: 15,
                   ),
-                  Obx(
-                    () => Visibility(
-                      visible: !controller.loading.value,
-                      child: ButtonNormal(
-                        text: 'Criar',
-                        height: 50,
-                        press: () {
-                          controller.setParceiro();
-                        },
-                      ),
-                    ),
-                  ),
+                  controller.idParceiroActualiz.value == 0
+                      ? Obx(
+                          () => Visibility(
+                            visible: !controller.loading.value,
+                            child: ButtonNormal(
+                              text: 'Criar',
+                              height: 50,
+                              press: () {
+                                controller.setParceiro();
+                              },
+                            ),
+                          ),
+                        )
+                      : Obx(
+                          () => Visibility(
+                            visible: !controller.loading.value,
+                            child: ButtonNormal(
+                              text: 'Actualizar',
+                              height: 50,
+                              press: () {
+                                controller.setParceiroUpdate();
+                              },
+                            ),
+                          ),
+                        ),
                   Obx(
                     () => Visibility(
                       visible: controller.loading.value,

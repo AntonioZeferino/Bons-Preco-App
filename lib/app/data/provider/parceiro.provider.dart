@@ -55,19 +55,13 @@ class ParceiroProvider {
   }
 
   registerParceiro(Parceiro parceiro, XFile img1, String token) async {
-    print("Parser->" +
-        parceiro.nome.toString() +
-        " IMG:" +
-        img1.path.toString() +
-        " Token:" +
-        token.toString());
     http.MultipartFile multipartFile1;
     try {
       http.MultipartRequest request =
-          new http.MultipartRequest("POST", Uri.parse(root + 'parceiroStore'));
+          http.MultipartRequest("POST", Uri.parse(root + 'parceiroStore'));
 
       if (img1.path.isNotEmpty) {
-        multipartFile1 = await http.MultipartFile.fromPath('file', img1.path);
+        multipartFile1 = await http.MultipartFile.fromPath('file2', img1.path);
         request.files.add(multipartFile1);
       }
 
@@ -76,12 +70,12 @@ class ParceiroProvider {
 
       request.fields['dono_id_user'] = parceiro.donoIdUser.toString();
       request.fields['nome'] = parceiro.nome.toString();
-      request.fields['img'] = parceiro.img.toString();
       request.fields['horario'] = parceiro.horario.toString();
       request.fields['entregas'] = parceiro.entregas.toString();
       request.fields['endereco'] = parceiro.endereco.toString();
       request.fields['contacto'] = parceiro.contacto.toString();
       request.fields['email'] = parceiro.email.toString();
+      request.fields['img'] = parceiro.img.toString();
 
       http.StreamedResponse response = await request.send();
 
@@ -101,7 +95,7 @@ class ParceiroProvider {
     http.MultipartFile multipartFile1;
     try {
       http.MultipartRequest request =
-          new http.MultipartRequest("POST", Uri.parse(root + 'parceiroUpdate'));
+          http.MultipartRequest("POST", Uri.parse(root + 'parceiroUpdate'));
 
       if (img1.path.isNotEmpty) {
         multipartFile1 = await http.MultipartFile.fromPath('file1', img1.path);
@@ -123,8 +117,8 @@ class ParceiroProvider {
       if (200 == response.statusCode) {
         return true;
       } else {
-        Conexao().dialogSMS('Actualizar',
-            "Erro ao actualizar verifica os dados!${response.statusCode}");
+        Conexao().dialogSMS(
+            'Actualizar', "Erro verifica os dados! ${response.statusCode}");
         return false;
       }
     } catch (e) {

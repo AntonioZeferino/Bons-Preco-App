@@ -33,6 +33,7 @@ class ListProdutoMinhaLoja extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     NumberFormat formatter = NumberFormat("###,###.00 kz", 'pt_PT');
+    DateFormat formatData = DateFormat("dd/MM/yyyy");
     final box = GetStorage('BonsPreco');
     final String rootProduto = Conexao().getImgProduto();
     RxBool loading = false.obs;
@@ -72,7 +73,7 @@ class ListProdutoMinhaLoja extends StatelessWidget {
                 left: Get.width / 30,
               ),
               decoration: BoxDecoration(
-                color: Layout.primary(),
+                color: Layout.primaryWhite(),
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
               ),
               child: CachedNetworkImage(
@@ -164,7 +165,7 @@ class ListProdutoMinhaLoja extends StatelessWidget {
                         top: 1,
                       ),
                       child: Text(
-                        data,
+                        formatData.format(DateTime.parse(data)),
                         style: TextStyle(
                           color: Layout.primary(),
                           fontSize: 15,

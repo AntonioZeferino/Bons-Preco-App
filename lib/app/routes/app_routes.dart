@@ -12,4 +12,5 @@ abstract class Routes {
   static const REGISTRA_PRODUTO = '/resgistrar_produto';
   static const MINHAS_RESERVAS = '/minhas_reservas';
   static const ADD_PRODUTO_LOJA = '/add_produto_loja';
+  static const ADMIN = '/admin';
 }

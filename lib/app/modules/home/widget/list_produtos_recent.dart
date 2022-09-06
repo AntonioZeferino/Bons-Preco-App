@@ -62,7 +62,7 @@ class ListProdutosRecentes extends StatelessWidget {
               height: Get.height / 3.3,
               width: Get.width,
               decoration: BoxDecoration(
-                color: Layout.primary(),
+                color: Layout.primaryWhite(),
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(10),
                   topRight: Radius.circular(10),
@@ -100,6 +100,15 @@ class ListProdutosRecentes extends StatelessWidget {
                       color: Layout.primaryWhite(),
                     ),
                   ),
+                ),
+              ),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  width: 1,
+                  style: BorderStyle.solid,
+                  color: Layout.primary(),
                 ),
               ),
             ),

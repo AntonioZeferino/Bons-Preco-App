@@ -40,7 +40,7 @@ class RegistraProdutoController extends GetxController {
     user = User.fromJson(box.read('user'));
   }
 
-  setPedido() async {
+  setProduto() async {
     bool res = false;
     if (image1.value.path.isNotEmpty) {
       if (nomeCtrl.text.toString().isNotEmpty) {
@@ -78,7 +78,7 @@ class RegistraProdutoController extends GetxController {
     }
   }
 
-  setPedidoUpdate() async {
+  setProdutoUpdate() async {
     bool res = false;
     if (nomeCtrl.text.toString().isNotEmpty) {
       loading.value = true;

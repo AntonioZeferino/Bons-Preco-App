@@ -152,7 +152,7 @@ class ProdutoProvider {
 
     try {
       http.MultipartRequest request =
-          new http.MultipartRequest("POST", Uri.parse(root + 'produtoStore'));
+          http.MultipartRequest("POST", Uri.parse(root + 'produtoStore'));
 
       if (img1.path.isNotEmpty) {
         multipartFile1 = await http.MultipartFile.fromPath('file1', img1.path);
@@ -162,7 +162,7 @@ class ProdutoProvider {
       request.headers['Content-Type'] = 'application/json';
       request.headers['authorization'] = 'Bearer $token';
 
-      request.fields['id'] = produto.id.toString().toString();
+      request.fields['id'] = produto.id.toString();
       request.fields['nome'] = produto.nome.toString().toString();
       request.fields['img'] = produto.img.toString();
 

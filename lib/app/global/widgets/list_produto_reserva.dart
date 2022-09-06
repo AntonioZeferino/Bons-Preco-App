@@ -73,7 +73,7 @@ class ListProdutoReserva extends StatelessWidget {
                 left: Get.width / 30,
               ),
               decoration: BoxDecoration(
-                color: Layout.primary(),
+                color: Layout.primaryWhite(),
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
               ),
               child: CachedNetworkImage(

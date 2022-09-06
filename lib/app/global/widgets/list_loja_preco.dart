@@ -35,6 +35,7 @@ class ListLojaPreco extends StatelessWidget {
     final box = GetStorage('BonsPreco');
     RxBool loading = false.obs;
     NumberFormat formatter = NumberFormat("###,###.00 kz", 'pt_PT');
+    DateFormat formatData = DateFormat("dd/MM/yyyy");
     RxString token = "".obs;
     return GestureDetector(
       onTap: () {
@@ -117,7 +118,7 @@ class ListLojaPreco extends StatelessWidget {
                         top: 2,
                       ),
                       child: Text(
-                        data,
+                        formatData.format(DateTime.parse(data)),
                         style: TextStyle(
                           color: Layout.primary(),
                           fontSize: 15,
