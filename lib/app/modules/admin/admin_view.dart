@@ -1,7 +1,9 @@
+import 'package:bompreco/app/global/widgets/bt_normal.dart';
 import 'package:bompreco/app/global/widgets/list_loja.dart';
 import 'package:bompreco/app/global/widgets/list_produto_gestor.dart';
 import 'package:bompreco/app/global/widgets/voltar_top.dart';
 import 'package:bompreco/app/modules/admin/admin_controller.dart';
+import 'package:bompreco/app/routes/app_routes.dart';
 import 'package:bompreco/app/theme/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -132,6 +134,22 @@ class AdminView extends GetView<AdminController> {
                                       color: Layout.dark(),
                                     ),
                                   ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(
+                                    left: Get.width / 18,
+                                  ),
+                                  width: Get.width / 2,
+                                  child: Column(children: [
+                                    ButtonNormal(
+                                      color: Layout.primary(),
+                                      text: 'Add Produto',
+                                      height: 45,
+                                      press: () {
+                                        Get.toNamed(Routes.REGISTRA_PRODUTO);
+                                      },
+                                    ),
+                                  ]),
                                 ),
                               ]),
                             ),

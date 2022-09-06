@@ -70,7 +70,7 @@ class ListProdutosRecentes extends StatelessWidget {
               ),
               child: CachedNetworkImage(
                 imageUrl: rootProduto + img,
-                fit: BoxFit.cover,
+                fit: BoxFit.fill,
                 imageBuilder: (BuildContext context, imageProvider) =>
                     Container(
                   decoration: BoxDecoration(
@@ -80,7 +80,7 @@ class ListProdutosRecentes extends StatelessWidget {
                     ),
                     image: DecorationImage(
                       image: imageProvider,
-                      fit: BoxFit.cover,
+                      fit: BoxFit.fill,
                     ),
                   ),
                 ),
@@ -92,7 +92,7 @@ class ListProdutosRecentes extends StatelessWidget {
                     ),
                     image: DecorationImage(
                       image: AssetImage('assets/icone.png'),
-                      fit: BoxFit.cover,
+                      fit: BoxFit.fill,
                     ),
                   ),
                   child: Center(
