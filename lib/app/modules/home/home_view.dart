@@ -103,18 +103,18 @@ class HomeView extends GetView<HomeController> {
                     ),
                   ),
                 ),
-                //Lista
+                //Lista Recentes
                 Obx(
                   () => SizedBox(
                     height: Get.height / 2.2,
                     width: Get.width,
-                    child: controller.listProduto.isNotEmpty
+                    child: controller.listProdutoRecentes.isNotEmpty
                         ? ListView.builder(
                             scrollDirection: Axis.horizontal,
                             itemCount: controller.listProdutoRecentes.length,
                             itemBuilder: (context, index) {
                               return ListProdutosRecentes(
-                                id: controller.listProduto[index].id,
+                                id: controller.listProdutoRecentes[index].id,
                                 img: controller.listProdutoRecentes[index].img
                                     .toString(),
                                 titulo: controller
@@ -170,8 +170,8 @@ class HomeView extends GetView<HomeController> {
                             itemCount: controller.listProdutoTop.length,
                             itemBuilder: (context, index) {
                               return ListProdutosTop(
-                                id: controller.listProduto[index].id,
-                                img: controller.listProduto[index].img
+                                id: controller.listProdutoTop[index].id,
+                                img: controller.listProdutoTop[index].img
                                     .toString(),
                                 titulo: controller.listProdutoTop[index].nome
                                     .toString(),

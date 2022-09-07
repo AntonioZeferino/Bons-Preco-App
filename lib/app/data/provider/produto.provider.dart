@@ -100,6 +100,31 @@ class ProdutoProvider {
     return null;
   }
 
+  getAllProdutoSoSistemaID(int id) async {
+    var response;
+    try {
+      var headers = {
+        'Content-Type': 'application/json',
+        //'authorization': 'Bearer $token'
+      };
+      final body = {
+        'id': id,
+      };
+
+      response = await http.post(Uri.parse(root + "produtoSoSistemaID"),
+          body: json.encode(body), headers: headers);
+
+      if (200 == response.statusCode) {
+        return json.decode(response.body);
+      } else {
+        Conexao().dialogSMS('Produtos', "Erro Produto");
+      }
+    } catch (e) {
+      print('Erro Produtos $e');
+    }
+    return null;
+  }
+
   getAllProdutoList() async {
     var response;
     try {

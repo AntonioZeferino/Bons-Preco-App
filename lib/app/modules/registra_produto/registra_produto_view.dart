@@ -68,7 +68,7 @@ class RegistraProdutoView extends GetView<RegistraProdutoController> {
                                     height: Get.height / 4,
                                     width: Get.width / 1.3,
                                     decoration: BoxDecoration(
-                                      color: Layout.primary(),
+                                      color: Layout.primaryWhite(),
                                       borderRadius: BorderRadius.circular(10),
                                       image: DecorationImage(
                                         image: imageProvider,
@@ -131,10 +131,16 @@ class RegistraProdutoView extends GetView<RegistraProdutoController> {
                     () => Visibility(
                       visible: !controller.loading.value,
                       child: ButtonNormal(
-                        text: 'Criar',
+                        text: controller.idProdutoActualiz.value == 0
+                            ? 'Criar'
+                            : 'Actualizar',
                         height: 50,
                         press: () {
-                          controller.setProduto();
+                          if (controller.idProdutoActualiz.value == 0) {
+                            controller.setProduto();
+                          } else {
+                            controller.setProdutoUpdate();
+                          }
                         },
                       ),
                     ),

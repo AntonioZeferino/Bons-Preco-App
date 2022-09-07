@@ -32,6 +32,11 @@ class RegistraProdutoController extends GetxController {
   @override
   void onInit() {
     pegarUser();
+    produto = box.read('ProdutoPar');
+    idProdutoActualiz.value = produto.id!;
+    if (produto.id != 0) {
+      preencherCampos(produto);
+    }
     token.value = box.read('accessToken');
     super.onInit();
   }
@@ -169,6 +174,14 @@ class RegistraProdutoController extends GetxController {
     nomeCtrl.text = '';
     image1 = XFile('').obs;
     verImg1 = 0.obs;
+    isPicked1.value = false;
+    box.write('ProdutoPar', Produto());
+  }
+
+  preencherCampos(Produto produto) async {
+    nomeCtrl.text = produto.nome.toString();
+    image1 = XFile('').obs;
+    verImg1 = 1.obs;
     isPicked1.value = false;
   }
 }

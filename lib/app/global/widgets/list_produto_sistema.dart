@@ -1,8 +1,10 @@
 import 'package:bompreco/app/data/conexao.dart';
 import 'package:bompreco/app/data/model/parcei_produt.dart';
+import 'package:bompreco/app/data/model/produto.dart';
 import 'package:bompreco/app/data/repository/parcei.produt.repository.dart';
 import 'package:bompreco/app/global/widgets/input_normal.dart';
 import 'package:bompreco/app/modules/add_produto_loja/add_produto_loja_controller.dart';
+import 'package:bompreco/app/routes/app_routes.dart';
 import 'package:bompreco/app/theme/layout.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +34,7 @@ class ListProdutoSistLoja extends StatelessWidget {
     AddProdutoLojaController controller = AddProdutoLojaController();
     final repository = ParceiProdutRepository();
     ParceiProdut parceiProdut = ParceiProdut();
+    Produto produto = Produto();
     TextEditingController precoCtrl = TextEditingController();
     TextEditingController dataCtrl = TextEditingController();
     RxBool valor = false.obs;
@@ -233,15 +236,21 @@ class ListProdutoSistLoja extends StatelessWidget {
                 ),
               ],
             ),
-            //Icon Reservar
+            //Icon Actualizar
             IconButton(
-              onPressed: () async {},
+              onPressed: () async {
+                produto.id = idProduto;
+                produto.img = produtImg;
+                produto.nome = produtNome;
+                box.write('ProdutoPar', produto);
+                Get.toNamed(Routes.REGISTRA_PRODUTO);
+              },
               icon: const Icon(
-                Icons.double_arrow_rounded,
+                Icons.update_outlined,
               ),
               color: Layout.primary(),
               iconSize: 40,
-            )
+            ),
           ],
         ),
       ),

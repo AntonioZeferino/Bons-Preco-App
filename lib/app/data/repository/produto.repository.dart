@@ -48,6 +48,16 @@ class ProdutoRepository {
     return list;
   }
 
+  produtoSoSistemaIDSelect(int id) async {
+    List<Produto> list = <Produto>[];
+    var response = await api.getAllProdutoSoSistemaID(id);
+    response.forEach((e) {
+      list.add(Produto.fromJson(e));
+    });
+
+    return list;
+  }
+
   produtoListSelect() async {
     List<ProdutoList> list = <ProdutoList>[];
     var response = await api.getAllProdutoList();

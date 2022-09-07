@@ -83,9 +83,18 @@ class NavigationDrawerWidget extends StatelessWidget {
             buildMenuItem(
               text: 'Criar Loja',
               icon: Icons.shopify,
-              onClicked: () {
+              onClicked: () async {
                 if (user.id != null) {
-                  Get.toNamed(Routes.CRIAR_LOJA);
+                  listParceiro.value = await parceiroRepository
+                      .parceiroSelectUser(user.id.toString(), token.value);
+
+                  if (listParceiro.isNotEmpty) {
+                    if (listParceiro[0].donoIdUser == user.id!) {
+                      Conexao().dialogSMS('Aviso!', "Já tens uma Loja criada!");
+                    }
+                  } else {
+                    Get.toNamed(Routes.CRIAR_LOJA);
+                  }
                 } else {
                   Conexao().dialogSMS(
                       'Aviso!', "Porfavor faça um Login ou Criar uma conta!");
