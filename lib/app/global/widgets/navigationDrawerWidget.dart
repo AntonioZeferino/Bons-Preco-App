@@ -77,7 +77,11 @@ class NavigationDrawerWidget extends StatelessWidget {
               text: 'Criar Conta',
               icon: Icons.account_box,
               onClicked: () {
-                Get.toNamed(Routes.CRIAR_CONTA);
+                if (user.id == null) {
+                  Get.toNamed(Routes.CRIAR_CONTA);
+                } else {
+                  Conexao().dialogSMS('Aviso!', "Já tens uma conta criada!");
+                }
               },
             ),
             buildMenuItem(

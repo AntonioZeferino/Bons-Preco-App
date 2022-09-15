@@ -206,12 +206,11 @@ class ProdutoProvider {
   }
 
   atualizarProduto(Produto produto, XFile img1, String token) async {
-    // var response;
     http.MultipartFile multipartFile1;
 
     try {
       http.MultipartRequest request =
-          new http.MultipartRequest("POST", Uri.parse(root + 'produtoUpdate'));
+          http.MultipartRequest("POST", Uri.parse(root + 'produtoUpdate'));
 
       if (img1.path.isNotEmpty) {
         multipartFile1 = await http.MultipartFile.fromPath('file1', img1.path);
@@ -225,8 +224,7 @@ class ProdutoProvider {
       request.fields['nome'] = produto.nome.toString().toString();
       request.fields['img'] = produto.img.toString();
 
-      http.StreamedResponse response = await request.send();
-
+      var response = await request.send();
       if (200 == response.statusCode) {
         return true;
       } else {
@@ -235,8 +233,8 @@ class ProdutoProvider {
       }
     } catch (e) {
       print('Erro Produtos $e');
+      return false;
     }
-    return null;
   }
 
   apagarProduto(Produto produto, String token) async {

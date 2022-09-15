@@ -107,7 +107,9 @@ class RegistraProdutoController extends GetxController {
       if (res) {
         loading.value = false;
         Conexao().dialogSMS('Produto', 'Actualizado com sucesso!');
+
         limparCampos();
+        Get.back();
       } else {
         loading.value = false;
         print("Errado Res: " + res.toString());
